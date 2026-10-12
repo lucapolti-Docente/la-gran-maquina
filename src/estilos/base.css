@@ -1,0 +1,15 @@
+/* Reglas generales: tipografía, botones, íconos. */
+*,*::before,*::after{box-sizing:border-box}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  height:100%;margin:0;overflow:hidden;background:var(--fondo);color:var(--tinta);
+  font-family:Verdana,"DejaVu Sans",Tahoma,Arial,sans-serif;font-size:17px;line-height:1.35;
+  -webkit-tap-highlight-color:transparent;
+}
+body.mayus{text-transform:uppercase}
+button{font:inherit;color:inherit;text-transform:inherit;cursor:pointer}
+button:focus-visible{outline:4px solid var(--cursor);outline-offset:2px}
+svg.ico{width:26px;height:26px;flex:none;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+svg.ico .lleno{fill:currentColor;stroke:none}
+
+#app{height:100%;display:flex;flex-direction:column}

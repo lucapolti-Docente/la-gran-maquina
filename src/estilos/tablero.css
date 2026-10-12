@@ -1,0 +1,16 @@
+/* Tablero y dibujo del avance (máquina o robot). */
+/* ----- tablero ----- */
+.celda-linea{stroke:var(--plano-linea);stroke-width:2}
+#pj,#enemigo{transition:transform .32s ease-in-out}
+.choca{animation:choca .35s}
+.salta{animation:salta .6s 2}
+.aparece{animation:aparece .5s}
+
+/* ----- máquina ----- */
+.fantasma *{fill:none!important;stroke:var(--tinta)!important;stroke-dasharray:5 5;opacity:.5}
+.pieza-nueva{animation:pieza-nueva 1s ease-out}
+.funciona .gira{transform-box:fill-box;transform-origin:center;animation:gira 3s linear infinite}
+.funciona .gira-eje{transform-box:view-box;transform-origin:110px 140px;animation:gira 3s linear infinite}
+.funciona .gira-inv{transform-box:fill-box;transform-origin:center;animation:gira 2s linear infinite reverse}
+.funciona .sube{animation:sube 1s ease-in-out infinite alternate}
+.funciona .brilla{animation:brilla .8s ease-in-out infinite alternate}

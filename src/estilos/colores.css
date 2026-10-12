@@ -1,0 +1,34 @@
+/* Colores y temas. Pensados para pantallas viejas y desteñidas: mucho contraste. */
+/* ===== Colores: pensados para pantallas viejas y desteñidas ===== */
+:root{
+  --tinta:#16163A;        /* texto y contornos */
+  --papel:#FFFFFF;        /* paneles */
+  --fondo:#DCE6F7;        /* fondo general */
+  --plano:#1747A6;        /* tablero tipo plano */
+  --plano-linea:#7FA3E8;
+  --energia:#FFC400;      /* amarillo energía */
+  --cursor:#FF5A1F;       /* naranja: lugar donde se agrega */
+  --ok:#0F8A47;
+  --error:#C81E1E;
+  --suave:#EEF2FB;
+  --mov:#2E6FE0;
+  --act:#E09A00;
+  --loop:#7A3FC7;
+  --btn:#C2185B;
+  --si:#00838F;
+  --esp:#546E7A;
+  --gar:#D84315;
+  --sombra:0 3px 0 var(--tinta);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --tinta:#F3F5FF; --papel:#1C2244; --fondo:#0E1330; --suave:#262E58;
+    --sombra:0 3px 0 #000;
+  }
+}
+:root[data-theme="dark"]{
+  --tinta:#F3F5FF; --papel:#1C2244; --fondo:#0E1330; --suave:#262E58; --sombra:0 3px 0 #000;
+}

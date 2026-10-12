@@ -1,0 +1,20 @@
+{
+  "name": "la-gran-maquina",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Juego para aprender a programar en 4.º grado: secuencias, repeticiones y condicionales.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:pendrive": "vite build --mode pendrive",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "vite": "8.3.4",
+    "vite-plugin-singlefile": "2.3.3",
+    "vitest": "5.0.3"
+  }
+}

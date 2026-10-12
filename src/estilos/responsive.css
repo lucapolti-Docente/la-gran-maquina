@@ -1,0 +1,45 @@
+/* Celular y pantallas angostas. */
+/* ===== Celular / pantallas angostas ===== */
+@media (max-width:899px), (max-aspect-ratio:1/1){
+  body{font-size:16px}
+  .barra{padding:6px 8px;gap:8px}
+  .barra h1{display:none}
+  .barra .nivel{margin-left:0;font-size:16px}
+  .juego{
+    padding:6px;gap:6px;
+    grid-template-columns:minmax(0,1fr) 92px;
+    grid-template-rows:minmax(96px,1fr) auto auto;
+    grid-template-areas:"tablero tablero" "mensaje maquina" "programa programa";
+  }
+  .zona-mensaje{padding:8px;gap:6px;max-height:min(170px,24vh);min-height:min(96px,16vh)}
+  #mensaje{overflow:auto}
+  #mensaje{font-size:16px}
+  #mensaje .titulo{font-size:16px}
+  #mensaje p{margin:0 0 4px}
+  #mensaje .dato{font-size:15px;padding:4px 8px}
+  .btn-siguiente{padding:6px 12px;font-size:17px}
+  .zona-maquina{padding:4px;justify-content:center}
+  .zona-maquina .cuenta{font-size:12px}
+  .zona-programa{padding:6px;gap:6px}
+  .zona-programa .etiqueta{display:none}
+  .paleta{display:flex;gap:4px}
+  .paleta .bloque-btn{flex:1 1 0}
+  .paleta .c-mov{flex-grow:.85}
+  .bloque-btn{flex-direction:column;justify-content:center;gap:0;min-height:48px;padding:2px;font-size:11px;min-width:0}
+  .bloque-btn span{max-width:100%;overflow:hidden;text-overflow:clip;white-space:nowrap}
+  .programa{flex:none;height:auto;min-height:52px;max-height:min(112px,17vh);padding:4px;gap:4px}
+  .chip,.rep-n,.rep-fin,.cursor{height:40px}
+  .rep-n{min-width:40px}
+  .acciones{grid-template-columns:2fr 1.5fr 1fr 1fr;gap:5px}
+  .accion{min-height:48px;font-size:15px}
+  .accion .txt-largo{display:none}
+  .accion .txt-corto{display:inline}
+  .limite{font-size:13px}
+}
+@media (max-width:399px){
+  .bloque-btn .nom-flecha{display:none}
+  .paleta{display:flex}
+  .bloque-btn{flex:1 1 0;font-size:10px}
+  .bloque-btn.c-act,.bloque-btn.c-btn,.bloque-btn.c-loop{flex-grow:1.6}
+  body.mayus .bloque-btn{font-size:9px}
+}
