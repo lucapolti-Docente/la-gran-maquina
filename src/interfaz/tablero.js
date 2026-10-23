@@ -34,7 +34,7 @@ export function dibujarVivo(est, falla, sinAnimar){
 
 export function animarPersonaje(clase){
   const g = $('pjMueve');
-  g.classList.remove('choca','salta'); g.getBoundingClientRect(); g.classList.add(clase);
+  g.classList.remove('choca','salta','pulso','espera'); g.getBoundingClientRect(); g.classList.add(clase);
 }
 
 export function dibujarMaquina(nueva){

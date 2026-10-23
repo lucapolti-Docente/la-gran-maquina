@@ -10,6 +10,7 @@ import { APP } from './inicio.js';
 import { borrarNivel, dibujarMisNiveles, guardarNivel, leerMisNiveles, nombreDe, nuevoId } from './mis-niveles.js';
 import { mostrarNivel } from './niveles.js';
 import { mostrarPantalla } from './pantallas.js';
+import { sonar } from './sonido.js';
 import { ACCIONES_MENU, cerrarTodo } from './ventanas.js';
 
 const T = Dibujo.T, MARGEN = 6;
@@ -158,7 +159,7 @@ function pintarEn(c){
 
 /* ----- probar ----- */
 export function probar(nv){
-  if (problemas(nv).length) { abrirEditor(nv); sacudir($('edMensajes')); return; }
+  if (problemas(nv).length) { abrirEditor(nv); sacudir($('edMensajes')); sonar('aviso'); return; }
   cancelarCorrida(); cerrarTodo();
   const nombre = nombreDe(nv);
   E.edicion = { ...(ed() || {}), nv };
@@ -248,6 +249,7 @@ export function conectarEditor(){
     ev.preventDefault();
     pintando = ed().herramienta !== 'chatarrin'; ultima = c.join(',');
     if (pintando) svg.setPointerCapture(ev.pointerId);
+    sonar('tecla');
     pintarEn(c);
   });
   svg.addEventListener('pointermove', ev => {

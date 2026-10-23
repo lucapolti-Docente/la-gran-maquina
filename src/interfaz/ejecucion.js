@@ -7,6 +7,8 @@ import { $, ico, mensaje } from './dom.js';
 import { E, guardar, nivelActual, niveles, P } from './estado.js';
 import { mostrarFinal } from './final.js';
 import { siguienteNivel } from './niveles.js';
+import { SONIDO_DE } from '../datos/sonidos.js';
+import { sonar } from './sonido.js';
 import { animarPersonaje, dibujarMaquina, dibujarVivo, reiniciarPersonaje } from './tablero.js';
 
 /* Lo que pasa al ganar o perder fuera de los niveles de siempre (por ejemplo, un nivel inventado). */
@@ -39,7 +41,10 @@ export function prepararCorrida(auto){
   dibujarVivo(c.est, null, true);
 }
 
-const programaVacio = () => { if (Motor.contarBloques(E.prog)) return false; mensaje('error', PASO.vacio.titulo, PASO.vacio.texto); return true; };
+const programaVacio = () => { if (Motor.contarBloques(E.prog)) return false; sonar('aviso'); mensaje('error', PASO.vacio.titulo, PASO.vacio.texto); return true; };
+
+/* Una animación chiquita del personaje para que se note qué hizo (sin moverse de lugar). */
+const ANIMACION_DE = { engranaje:'pulso', encendida:'pulso', apretado:'pulso', escudo:'pulso', apagado:'pulso', espera:'espera' };
 
 export function ejecutar(){
   if (corriendo()) { pausar(); return; }
@@ -132,6 +137,7 @@ export function avanzar(){
   const p = s.p, titulo = c.auto ? PASO.ejecutando : PASO.titulo;
   resaltar(p);
   if (s.pregunta) {
+    sonar('pregunta');
     mensaje('', titulo, textoPaso(p)+': '+PREGUNTAS[p.bloque.cond].largo+' '+(p.resultado ? PASO.si : PASO.no));
     siguientePaso(c, Math.max(450, msVelocidad()));
     return;
@@ -140,6 +146,7 @@ export function avanzar(){
   if (s.falla) {
     dibujarVivo(c.est, r);
     animarPersonaje('choca');
+    sonar(SONIDO_DE[r.tipo] || 'choque');
     const el = chipDe(p.bloque); if (el) el.classList.add('falla');
     const { que, ayuda } = FALLAS[r.tipo];
     mensaje('error', quien+': '+que, ayuda + (Motor.hayAzar(E.mapa) ? ' Ojo: el tablero cambia en cada intento.' : ''));
@@ -148,6 +155,8 @@ export function avanzar(){
     return;
   }
   dibujarVivo(c.est, null);
+  sonar(SONIDO_DE[r.tipo] || 'mover');
+  if (ANIMACION_DE[r.tipo]) animarPersonaje(ANIMACION_DE[r.tipo]);
   let txt = quien+': '+nombreBloque(p.bloque)+'.';
   const extra = LOGROS[r.tipo];
   if (extra) txt += extra;
@@ -164,6 +173,7 @@ export function terminar(){
   if (ev.gano && Motor.hayAzar(E.mapa)) {
     const falla = Motor.probarTodas(E.prog, E.mapa);
     if (falla) {
+      sonar('falta');
       mensaje('error', '¡Esta vez llegaste! Pero no alcanza.', 'El tablero cambia en cada intento, y con otro tablero tu programa falla. Usá Si para preguntar antes de actuar.',
         '<button class="btn-siguiente" id="btnProbarFalla">Probar con el tablero donde falla</button>');
       $('btnProbarFalla').addEventListener('click', () => { E.tableroPedido = falla.variante; pararCorrida(); ejecutar(); });
@@ -171,6 +181,7 @@ export function terminar(){
       return;
     }
   }
+  if (ev.gano) sonar('ganar'); else sonar('falta');
   if (ev.gano && AL_TERMINAR.ganar) {
     c.gano = true;
     animarPersonaje('salta');

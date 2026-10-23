@@ -3,6 +3,8 @@
 @keyframes marca{50%{outline-color:transparent}}
 @keyframes choca{25%{transform:translateX(10px)}50%{transform:translateX(-8px)}75%{transform:translateX(5px)}}
 @keyframes salta{50%{transform:translateY(-18px)}}
+@keyframes pulso{50%{transform:scale(1.14)}}
+@keyframes espera{25%{transform:translateY(-5px)}75%{transform:translateY(-5px)}}
 @keyframes aparece{0%{opacity:0}100%{opacity:1}}
 @keyframes pieza-nueva{0%{opacity:0}40%{opacity:1}60%{opacity:.4}100%{opacity:1}}
 @keyframes gira{to{transform:rotate(360deg)}}

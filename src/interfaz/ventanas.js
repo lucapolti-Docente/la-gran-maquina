@@ -10,7 +10,9 @@ import { cargarNivel } from './niveles.js';
 import { dibujarMaquina } from './tablero.js';
 
 /* ----- menú y ventanas ----- */
-export function abrirMenu(){ $('menu').classList.add('abierto'); $('velo').classList.add('abierto'); $('btnMenu').setAttribute('aria-expanded','true'); $('menu').querySelector('button').focus(); }
+export function dibujarBotonSonido(){ const b = $('menu').querySelector('[data-accion="sonido"]'); b.textContent = E.sonido ? 'Sonido: sí' : 'Sonido: no'; b.setAttribute('aria-pressed', String(E.sonido)); }
+
+export function abrirMenu(){ dibujarBotonSonido(); $('menu').classList.add('abierto'); $('velo').classList.add('abierto'); $('btnMenu').setAttribute('aria-expanded','true'); $('menu').querySelector('button').focus(); }
 
 export function cerrarTodo(){
   $('menu').classList.remove('abierto'); $('velo').classList.remove('abierto'); $('btnMenu').setAttribute('aria-expanded','false');
@@ -57,5 +59,6 @@ export const ACCIONES_MENU = {
   reiniciar: () => { cerrarTodo(); cargarNivel(P().nivel, P().hecho); },
   anterior: () => { cerrarTodo(); if (P().nivel > 0) cargarNivel(P().nivel - 1, true); },
   saltar: () => { cerrarTodo(); if (P().nivel < niveles().length - 1) cargarNivel(P().nivel + 1, false); else { P().hecho = true; guardar(); dibujarMaquina(); mostrarFinal(); } },
+  sonido: () => { E.sonido = !E.sonido; guardar(); dibujarBotonSonido(); },
   cerrarMenu: cerrarTodo
 };

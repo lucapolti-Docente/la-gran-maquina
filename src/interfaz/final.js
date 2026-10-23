@@ -3,6 +3,7 @@ import * as Dibujo from '../dibujo/index.js';
 import { FINAL } from '../datos/textos.js';
 import { $ } from './dom.js';
 import { E, niveles, P } from './estado.js';
+import { sonar } from './sonido.js';
 import { cerrarTodo } from './ventanas.js';
 
 export function mostrarFinal(){
@@ -34,5 +35,6 @@ export function mostrarFinal(){
     f.appendChild(p);
   }
   f.classList.add('abierta');
+  sonar('final');
   $('btnOtraVez').focus();
 }

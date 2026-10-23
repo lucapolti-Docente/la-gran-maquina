@@ -4,6 +4,8 @@
 #pj,#enemigo{transition:transform .32s ease-in-out}
 .choca{animation:choca .35s}
 .salta{animation:salta .6s 2}
+.pulso{transform-box:fill-box;transform-origin:center;animation:pulso .3s ease-out}
+.espera{animation:espera .45s ease-in-out}
 .aparece{animation:aparece .5s}
 
 /* ----- máquina ----- */

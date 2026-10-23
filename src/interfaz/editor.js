@@ -5,6 +5,7 @@ import { $, ico, mensaje } from './dom.js';
 import { actualizarBotones, cancelarCorrida, corriendo } from './ejecucion.js';
 import { E, nivelActual } from './estado.js';
 import { permitido } from './paleta.js';
+import { sonar } from './sonido.js';
 
 /* ----- programa ----- */
 export function buscar(id, lista, ruta){
@@ -63,6 +64,7 @@ export function agregar(tipo, d){
   cancelarCorrida();
   const n = nivelActual(), max = n.max;
   if (max && Motor.contarBloques(E.prog) >= max) {
+    sonar('aviso');
     mensaje('error', 'Ya usaste los '+max+' bloques', n.bloques.includes('loop') ? 'Probá con Repetir: un Repetir con bloques adentro hace muchos pasos.' : 'Borrá alguno para agregar otro.');
     return;
   }
@@ -73,6 +75,7 @@ export function agregar(tipo, d){
   listaDelCursor().splice(E.cursor.i, 0, b);
   if (b.cuerpo) E.cursor = { ruta:[...ruta, b.id], i:0 };
   else E.cursor.i++;
+  sonar('tecla');
   dibujarPrograma();
 }
 
