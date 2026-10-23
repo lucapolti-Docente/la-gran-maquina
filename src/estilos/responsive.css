@@ -32,6 +32,7 @@
   .rep-n{min-width:40px}
   .acciones{grid-template-columns:minmax(0,2.5fr) minmax(0,1.7fr) repeat(3,minmax(0,1fr));gap:4px}
   .accion.principal{font-size:15px}
+  body.mayus .acciones .accion{font-size:12px;letter-spacing:-.2px}
   .acciones .accion,#btnEjecutar,#btnPaso,#btnReiniciar{min-width:0;padding-left:2px;padding-right:2px;grid-column:auto}
   .vuelta{font-size:12px;padding:1px 6px}
   .accion{min-height:48px;font-size:15px}

@@ -138,4 +138,5 @@ body.en-prueba .info-prueba{display:flex;flex-direction:column;align-items:cente
   .ed-mensajes p{margin:0 0 2px}
   .info-prueba b{font-size:14px}
   .info-prueba{font-size:12px}
+  .info-prueba .estado-nivel{font-size:11px;padding:1px 5px;border-width:1px}
 }

@@ -38,5 +38,5 @@ body.en-inicio [data-solo-juego]{display:none}
   .nombre-modo{font-size:24px}
   .avance-modo{font-size:17px}
   .barra-avance{height:10px;border-width:2px}
-  .desc-modo{font-size:14px}
+  .desc-modo{display:none}
 }

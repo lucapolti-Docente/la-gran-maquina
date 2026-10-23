@@ -1,6 +1,8 @@
 # La Gran Máquina
 
-Juego para aprender a programar en 4.º grado. Los chicos arman una secuencia de bloques y el personaje la cumple paso a paso: secuencias, repeticiones (Repetir) y condicionales (Si). Tiene dos dificultades de 15 niveles cada una.
+Juego para aprender a programar en 4.º grado. Los chicos arman una secuencia de bloques y el personaje la cumple paso a paso: secuencias, repeticiones (Repetir) y condicionales (Si). Al abrirlo se elige el modo: **Fácil** y **Difícil** (15 niveles cada uno) o **Inventá tu nivel**, un editor para crear tableros propios y probarlos.
+
+Con **Paso** el programa avanza de a un bloque: queda marcado el que sigue y la vuelta del Repetir. Desde ahí se puede seguir con **Ejecutar** o volver al principio con **Reiniciar**.
 
 - Funciona en las netbooks de la escuela (1366×768) y en celulares, sin scroll.
 - No pide cuentas: el progreso queda guardado en el navegador.
@@ -25,24 +27,31 @@ index.html                  la pantalla (estructura fija y textos de "Cómo juga
 src/
   main.js                   arranca el juego
   config.js                 velocidades y dificultades
-  guardado.js               progreso en el navegador
+  guardado.js               progreso en el navegador (formato v4; migra v3 y v2 al abrir)
+  modos/                    un archivo por modo de la pantalla de inicio + index.js con la lista
   datos/                    ← lo que más se cambia
     niveles/                facil.js, dificil.js y LEYENDA.md (cómo se escribe un mapa)
     personajes/             un archivo por personaje + index.js con el orden
-    textos.js               mensajes de error, ayudas, preguntas del Si, pantalla final
+    textos.js               mensajes de error, ayudas, preguntas del Si, Paso, editor, pantalla final
+    sonidos.js              los sonidos (sin archivos) y cuál suena en cada momento
   motor/                    la lógica pura: no dibuja ni toca la pantalla
     mapa.js                 lee los mapas y arma los tableros al azar
     programa.js             bloques y programas
     reglas.js               qué pasa con cada instrucción, enemigos, preguntas
-    interprete.js           ejecuta, evalúa y prueba en todos los tableros
+    interprete.js           ejecuta (crearCorrida: de a un bloque, igual para Ejecutar y Paso), evalúa y prueba
+    validar.js              revisa que un nivel tenga sentido (lo usan los tests y el editor)
+    editor.js               arma niveles inventados con el mismo formato de LEYENDA.md
   dibujo/                   genera SVG a partir del estado del motor
     tablero.js, enemigos.js, personajes.js, avance.js (máquina y robot), util.js
   interfaz/                 todo lo que toca la pantalla
-    estado.js, niveles.js, paleta.js, editor.js, ejecucion.js,
-    tablero.js, ventanas.js, final.js, controles.js, dom.js
+    estado.js, niveles.js, paleta.js, editor.js (bloques del programa), ejecucion.js,
+    tablero.js, ventanas.js, final.js, controles.js, dom.js,
+    inicio.js (pantalla de inicio), pantallas.js, sonido.js,
+    editor-nivel.js y mis-niveles.js (Inventá tu nivel)
   estilos/
     colores.css             todos los colores (variables)
     base.css, layout.css, componentes.css, tablero.css, ventanas.css,
+    inicio.css, editor.css  pantalla de inicio e Inventá tu nivel
     responsive.css          celular
     animaciones.css         todas las animaciones
 tests/                      pruebas con Vitest
@@ -55,6 +64,10 @@ La regla principal: **el motor no sabe nada de la pantalla**. Por eso se puede p
 **Sumar un personaje.** Copiá un archivo de `src/datos/personajes/`, cambiale `id`, `nombre` y el dibujo, y agregalo a `src/datos/personajes/index.js`. Para un dibujo de un chico o una chica, guardá la foto en `src/datos/personajes/imagenes/` y seguí el ejemplo que está en `index.js`. Para el crédito usá solo nombre de pila y grado.
 
 **Sumar o cambiar un nivel.** Editá `src/datos/niveles/facil.js` o `dificil.js`. La leyenda de los mapas está en `LEYENDA.md`. Cada nivel lleva una `solucion`: `npm test` comprueba que gane en todos los tableros posibles.
+
+**Sumar un modo a la pantalla de inicio.** Creá un archivo en `src/modos/` (copiá `facil.js` o `inventar.js`) con `id`, `nombre`, `descripcion`, `icono`, `avance` y `arrancar`, y agregalo a la lista de `src/modos/index.js`. La pantalla de inicio no se toca. Para una lista de niveles nueva, usá `modoDeNiveles` y sumá la lista en `src/datos/niveles/index.js` y en `config.js`.
+
+**Cambiar un sonido.** Están en `src/datos/sonidos.js`: cada nota tiene frecuencia, duración y volumen. Se apagan desde el menú (Sonido: sí / no).
 
 **Cambiar un texto.** Los mensajes están en `src/datos/textos.js`. Los textos de cada nivel, en el archivo del nivel.
 
@@ -83,5 +96,7 @@ La regla principal: **el motor no sabe nada de la pantalla**. Por eso se puede p
 ## Versión para pendrive
 
 `npm run build:pendrive` genera `dist-pendrive/la-gran-maquina.html`: un solo archivo con todo adentro. Se copia al pendrive y se abre con doble clic, sin internet.
+
+Lo que se guarda en el navegador: `gran-maquina-v4` (modo, personaje, letra, velocidad, sonido y avance de cada modo) y `gran-maquina-mis-niveles` (los niveles inventados). Las claves viejas `gran-maquina-v3` y `-v2` se leen una vez, se pasan a v4 y no se borran.
 
 El progreso queda guardado en cada navegador y en cada sitio por separado: lo que se avanzó en GitHub Pages no aparece en el archivo del pendrive, y al revés. Para ubicar a un chico en su nivel, usá **Saltar nivel** en el menú.
