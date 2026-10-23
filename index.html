@@ -17,6 +17,11 @@
     <div class="nivel" id="tituloNivel"></div>
   </header>
 
+  <main class="inicio" id="inicio" aria-label="Elegí un modo">
+    <h2 class="titulo-inicio">¿Cómo querés jugar?</h2>
+    <div class="tarjetas-modos" id="tarjetasModos"></div>
+  </main>
+
   <main class="juego">
     <section class="zona-tablero panel" aria-label="Tablero">
       <svg id="tablero" role="img" aria-label="Tablero del nivel"></svg>
@@ -58,12 +63,13 @@
 
 <nav class="menu" id="menu" aria-label="Menú">
   <h2>Menú</h2>
+  <button data-accion="inicio" data-solo-juego>Inicio</button>
   <button data-accion="comoJugar">Cómo jugar</button>
-  <button data-accion="verDibujo">Ver dibujo</button>
+  <button data-accion="verDibujo" data-solo-juego>Ver dibujo</button>
   <button data-accion="config">Configuración</button>
-  <button data-accion="reiniciar">Reiniciar nivel</button>
-  <button data-accion="anterior">Nivel anterior</button>
-  <button data-accion="saltar">Saltar nivel</button>
+  <button data-accion="reiniciar" data-solo-juego>Reiniciar nivel</button>
+  <button data-accion="anterior" data-solo-juego>Nivel anterior</button>
+  <button data-accion="saltar" data-solo-juego>Saltar nivel</button>
   <button data-accion="cerrarMenu">Cerrar menú</button>
 </nav>
 
@@ -76,7 +82,8 @@
     <li>Llegá a la bandera. Si hay engranajes, juntalos. Si hay lámparas, encendelas.</li>
     <li>Si una compuerta está cerrada, parate sobre el botón y usá <b>Apretar</b>.</li>
     <li>Chatarrín avanza un casillero con cada instrucción. ¡Que no te toque!</li>
-    <li>En el nivel Difícil aparecen Bulón (quieto) y Chispero (tira chispas). El <b>Garrote</b> apaga al enemigo que tenés enfrente y el escudo te protege de las chispas.</li>
+    <li>Al abrir el juego elegí el modo: <b>Fácil</b> o <b>Difícil</b>. Para cambiar, tocá <b>Inicio</b> en el menú.</li>
+    <li>En el modo Difícil aparecen Bulón (quieto) y Chispero (tira chispas). El <b>Garrote</b> apaga al enemigo que tenés enfrente y el escudo te protege de las chispas.</li>
     <li><b>Si</b> hace una pregunta. Lo de adentro se cumple solo cuando la respuesta es sí. Tocá la pregunta para cambiarla. <b>Esperar</b> te deja quieto un turno.</li>
     <li>Donde hay un signo de pregunta, el tablero cambia en cada intento: tu programa tiene que funcionar siempre.</li>
     <li>La raya naranja muestra dónde se agrega el próximo bloque. Tocá un bloque del programa para mover la raya ahí.</li>
@@ -89,10 +96,6 @@
 <div class="ventana" id="vConfig" role="dialog" aria-modal="true" aria-labelledby="tConfig">
   <button class="cerrar" data-cerrar>Cerrar</button>
   <h2 id="tConfig">Configuración</h2>
-  <div class="grupo">
-    <h3>Dificultad</h3>
-    <div class="opciones" id="opDificultad"></div>
-  </div>
   <div class="grupo">
     <h3>Personaje</h3>
     <div class="personajes" id="listaPersonajes"></div>
@@ -108,8 +111,8 @@
     <h3>Velocidad</h3>
     <div class="opciones" id="opVelocidad"></div>
   </div>
-  <div class="grupo">
-    <button class="peligro" id="btnBorrarProgreso">Empezar esta dificultad de cero</button>
+  <div class="grupo" data-solo-juego>
+    <button class="peligro" id="btnBorrarProgreso">Empezar este modo de cero</button>
   </div>
 </div>
 
@@ -126,6 +129,7 @@
   <div class="botones">
     <button id="btnOtraVez">Jugar de nuevo</button>
     <button id="btnCerrarFinal">Volver al último nivel</button>
+    <button id="btnInicioFinal">Inicio</button>
   </div>
 </div>
 

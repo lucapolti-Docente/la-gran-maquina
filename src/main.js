@@ -6,17 +6,19 @@ import { VELOCIDADES } from './config.js';
 import { Guardado } from './guardado.js';
 import * as Motor from './motor/index.js';
 import * as Dibujo from './dibujo/index.js';
-import { E, P } from './interfaz/estado.js';
+import { E } from './interfaz/estado.js';
 import { aplicarMayus } from './interfaz/ventanas.js';
 import { conectar } from './interfaz/controles.js';
-import { cargarNivel } from './interfaz/niveles.js';
+import { conectarInicio, mostrarInicio } from './interfaz/inicio.js';
 
 function iniciar(){
   const g = Guardado.leer();
   if (g.personaje && PERSONAJES.some(p => p.id === g.personaje)) E.personaje = g.personaje;
   E.mayus = !!g.mayus;
   if (VELOCIDADES.some(v => v.id === g.velocidad)) E.velocidad = g.velocidad;
-  if (g.dif && NIVELES[g.dif]) E.dif = g.dif;
+  if (typeof g.modo === 'string') E.modo = g.modo;
+  if (NIVELES[E.modo]) E.dif = E.modo;
+  E.sonido = g.sonido !== false;
   Object.keys(E.progreso).forEach(d => {
     const p = g.progreso && g.progreso[d]; if (!p) return;
     const q = E.progreso[d];
@@ -26,7 +28,8 @@ function iniciar(){
   });
   aplicarMayus();
   conectar();
-  cargarNivel(P().nivel, P().hecho);
+  conectarInicio();
+  mostrarInicio();
 }
 
 iniciar();

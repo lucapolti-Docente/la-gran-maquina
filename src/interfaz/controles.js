@@ -39,10 +39,6 @@ export function conectar(){
     const b = e.target.closest('[data-pj]'); if (!b) return;
     E.personaje = b.dataset.pj; guardar(); dibujarConfig(); cancelarCorrida(); dibujarTableroFijo(); reiniciarPersonaje();
   });
-  $('opDificultad').addEventListener('click', e => {
-    const b = e.target.closest('[data-dif]'); if (!b || b.dataset.dif === E.dif) return;
-    E.dif = b.dataset.dif; dibujarConfig(); cargarNivel(P().nivel, P().hecho);
-  });
   $('opMinus').addEventListener('click', () => { E.mayus = false; aplicarMayus(); guardar(); dibujarConfig(); });
   $('opMayus').addEventListener('click', () => { E.mayus = true; aplicarMayus(); guardar(); dibujarConfig(); });
   $('opVelocidad').addEventListener('click', e => { const b = e.target.closest('[data-vel]'); if (b) { E.velocidad = b.dataset.vel; guardar(); dibujarConfig(); } });
@@ -56,6 +52,7 @@ export function conectar(){
   });
   $('btnOtraVez').addEventListener('click', () => { $('final').classList.remove('abierta'); P().ganados.clear(); cargarNivel(0, false); });
   $('btnCerrarFinal').addEventListener('click', () => { $('final').classList.remove('abierta'); });
+  $('btnInicioFinal').addEventListener('click', () => { $('final').classList.remove('abierta'); ACCIONES_MENU.inicio(); });
 
   // Deslizar sobre el tablero (celular)
   let ini = null;
@@ -72,7 +69,7 @@ export function conectar(){
   // Teclado
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') { if (hayVentana()) { cerrarTodo(); $('final').classList.remove('abierta'); } else if (corriendo()) detener(); return; }
-    if (hayVentana() || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (hayVentana() || document.body.classList.contains('en-inicio') || e.ctrlKey || e.metaKey || e.altKey) return;
     const flechas = { ArrowUp:'u', ArrowDown:'d', ArrowLeft:'l', ArrowRight:'r' };
     const k = e.key.toLowerCase();
     const letras = { e:'act', a:'btn', r:'loop', s:'si', w:'esperar', g:'garrote' };

@@ -5,7 +5,7 @@ import { PERSONAJES } from '../datos/personajes/index.js';
 import { Guardado } from '../guardado.js';
 
 export const E = {
-  dif:'facil', personaje:'tuerca', mayus:false, velocidad:'normal',
+  modo:'facil', dif:'facil', personaje:'tuerca', mayus:false, velocidad:'normal', sonido:true,
   progreso:{ facil:{ nivel:0, hecho:false, ganados:new Set() }, dificil:{ nivel:0, hecho:false, ganados:new Set() } },
   mapa:null, prog:[], cursor:{ ruta:[], i:0 },
   corrida:null,          // { est, gen, auto, timer, terminada }
@@ -22,7 +22,7 @@ export const nivelActual = () => niveles()[P().nivel];
 export function guardar(){
   const prog = {};
   Object.keys(E.progreso).forEach(d => { const p = E.progreso[d]; prog[d] = { nivel:p.nivel, hecho:p.hecho, ganados:[...p.ganados] }; });
-  Guardado.escribir({ dif:E.dif, personaje:E.personaje, mayus:E.mayus, velocidad:E.velocidad, progreso:prog });
+  Guardado.escribir({ modo:E.modo, personaje:E.personaje, mayus:E.mayus, velocidad:E.velocidad, sonido:E.sonido, progreso:prog });
 }
 
 export function personaje(){ return PERSONAJES.find(p => p.id === E.personaje) || PERSONAJES[0]; }
