@@ -7,6 +7,7 @@ import { cancelarCorrida, corriendo, detener, ejecutar, pasoAPaso, reiniciar } f
 import { E, guardar, P } from './estado.js';
 import { cargarNivel } from './niveles.js';
 import { dibujarTableroFijo, reiniciarPersonaje } from './tablero.js';
+import { sinPrograma } from './pantallas.js';
 import { abrirMenu, ACCIONES_MENU, aplicarMayus, cerrarTodo, dibujarConfig, hayVentana } from './ventanas.js';
 
 /* ----- eventos ----- */
@@ -70,7 +71,7 @@ export function conectar(){
   // Teclado
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') { if (hayVentana()) { cerrarTodo(); $('final').classList.remove('abierta'); } else if (corriendo()) detener(); return; }
-    if (hayVentana() || document.body.classList.contains('en-inicio') || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (hayVentana() || sinPrograma() || e.ctrlKey || e.metaKey || e.altKey) return;
     const flechas = { ArrowUp:'u', ArrowDown:'d', ArrowLeft:'l', ArrowRight:'r' };
     const k = e.key.toLowerCase();
     const letras = { e:'act', a:'btn', r:'loop', s:'si', w:'esperar', g:'garrote' };

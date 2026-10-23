@@ -4,5 +4,6 @@
    Para sumar un modo: creá su archivo en esta carpeta y agregalo a la lista. */
 import facil from './facil.js';
 import dificil from './dificil.js';
+import inventar from './inventar.js';
 
-export const MODOS = [facil, dificil];
+export const MODOS = [facil, dificil, inventar];

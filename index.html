@@ -15,11 +15,64 @@
     </button>
     <h1>La Gran Máquina</h1>
     <div class="nivel" id="tituloNivel"></div>
+    <button class="btn-barra" id="btnEditar" data-solo-prueba>
+      <svg class="ico" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13 7l4 4"/></svg><span>Editar</span>
+    </button>
   </header>
 
   <main class="inicio" id="inicio" aria-label="Elegí un modo">
     <h2 class="titulo-inicio">¿Cómo querés jugar?</h2>
     <div class="tarjetas-modos" id="tarjetasModos"></div>
+  </main>
+
+  <main class="pantalla mis-niveles" id="misNiveles" aria-label="Mis niveles">
+    <div class="cab-pantalla">
+      <h2>Mis niveles</h2>
+      <button class="btn-grande" id="btnNuevoNivel">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span>Nuevo nivel</span>
+      </button>
+    </div>
+    <p class="nota-guardado">Los niveles se guardan solo en esta compu.</p>
+    <div class="lista-niveles" id="listaMisNiveles"></div>
+  </main>
+
+  <main class="pantalla editor-nivel" id="editorNivel" aria-label="Inventá tu nivel">
+    <section class="ed-tablero panel" aria-label="Tablero: tocá o arrastrá para pintar">
+      <svg id="tableroEditor" role="img" aria-label="Tablero del nivel que estás inventando"></svg>
+    </section>
+    <section class="ed-panel panel">
+      <div class="ed-acciones">
+        <button class="accion principal" id="btnProbar">
+          <svg class="ico" viewBox="0 0 24 24"><path class="lleno" d="M6 4l14 8-14 8z"/></svg><span>Probar</span>
+        </button>
+        <button class="accion" id="btnVolverLista">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>Mis niveles</span>
+        </button>
+      </div>
+      <div class="pestanas" role="tablist">
+        <button class="pestana-btn" data-pestana="pintar" role="tab" aria-selected="true">Pintar</button>
+        <button class="pestana-btn" data-pestana="bloques" role="tab" aria-selected="false">Bloques</button>
+        <button class="pestana-btn" data-pestana="nombre" role="tab" aria-selected="false">Nombre</button>
+      </div>
+      <div class="pestana" id="pestanaPintar">
+        <div class="herramientas" id="herramientas"></div>
+        <div class="direcciones" id="direcciones"></div>
+        <div class="tamanos">
+          <div class="tamano"><span class="largo">Columnas</span><span class="corto" aria-hidden="true">↔</span><button class="mas-menos" data-tam="ancho" data-paso="-1" aria-label="Menos columnas">–</button><b id="valAncho"></b><button class="mas-menos" data-tam="ancho" data-paso="1" aria-label="Más columnas">+</button></div>
+          <div class="tamano"><span class="largo">Filas</span><span class="corto" aria-hidden="true">↕</span><button class="mas-menos" data-tam="alto" data-paso="-1" aria-label="Menos filas">–</button><b id="valAlto"></b><button class="mas-menos" data-tam="alto" data-paso="1" aria-label="Más filas">+</button></div>
+        </div>
+      </div>
+      <div class="pestana" id="pestanaBloques" hidden>
+        <p class="ayuda-ed">Elegí qué bloques se pueden usar.</p>
+        <div class="interruptores" id="interruptores"></div>
+        <div class="tamano"><span>Límite</span><button class="mas-menos" id="maxMenos" aria-label="Menos bloques">–</button><b id="valMax"></b><button class="mas-menos" id="maxMas" aria-label="Más bloques">+</button></div>
+      </div>
+      <div class="pestana" id="pestanaNombre" hidden>
+        <label class="campo">Nombre del nivel<input id="inNombre" maxlength="28" autocomplete="off"></label>
+        <label class="campo">Lo inventó (solo tu nombre)<input id="inAutor" maxlength="20" autocomplete="off"></label>
+      </div>
+    </section>
+    <section class="ed-mensajes panel" id="edMensajes" aria-live="polite"></section>
   </main>
 
   <main class="juego">
@@ -34,6 +87,7 @@
     <section class="zona-maquina panel" aria-label="Avance: la máquina">
       <svg id="maquinaChica" viewBox="0 0 380 240" role="img"></svg>
       <div class="cuenta" id="cuentaPiezas"></div>
+      <div class="info-prueba" id="infoPrueba"></div>
     </section>
 
     <section class="zona-programa panel" aria-label="Programa">
@@ -69,11 +123,12 @@
   <h2>Menú</h2>
   <button data-accion="inicio" data-solo-juego>Inicio</button>
   <button data-accion="comoJugar">Cómo jugar</button>
+  <button data-accion="editar" data-solo-prueba>Editar el nivel</button>
   <button data-accion="verDibujo" data-solo-juego>Ver dibujo</button>
   <button data-accion="config">Configuración</button>
   <button data-accion="reiniciar" data-solo-juego>Reiniciar nivel</button>
-  <button data-accion="anterior" data-solo-juego>Nivel anterior</button>
-  <button data-accion="saltar" data-solo-juego>Saltar nivel</button>
+  <button data-accion="anterior" data-solo-juego data-no-prueba>Nivel anterior</button>
+  <button data-accion="saltar" data-solo-juego data-no-prueba>Saltar nivel</button>
   <button data-accion="cerrarMenu">Cerrar menú</button>
 </nav>
 
@@ -86,7 +141,8 @@
     <li>Llegá a la bandera. Si hay engranajes, juntalos. Si hay lámparas, encendelas.</li>
     <li>Si una compuerta está cerrada, parate sobre el botón y usá <b>Apretar</b>.</li>
     <li>Chatarrín avanza un casillero con cada instrucción. ¡Que no te toque!</li>
-    <li>Al abrir el juego elegí el modo: <b>Fácil</b> o <b>Difícil</b>. Para cambiar, tocá <b>Inicio</b> en el menú.</li>
+    <li>Al abrir el juego elegí el modo: <b>Fácil</b>, <b>Difícil</b> o <b>Inventá tu nivel</b>. Para cambiar, tocá <b>Inicio</b> en el menú.</li>
+    <li>En <b>Inventá tu nivel</b> elegí una herramienta y tocá o arrastrá sobre el tablero. Después tocá <b>Probar</b> para jugarlo. Con <b>Editar</b> volvés a cambiarlo.</li>
     <li>En el modo Difícil aparecen Bulón (quieto) y Chispero (tira chispas). El <b>Garrote</b> apaga al enemigo que tenés enfrente y el escudo te protege de las chispas.</li>
     <li><b>Si</b> hace una pregunta. Lo de adentro se cumple solo cuando la respuesta es sí. Tocá la pregunta para cambiarla. <b>Esperar</b> te deja quieto un turno.</li>
     <li>Donde hay un signo de pregunta, el tablero cambia en cada intento: tu programa tiene que funcionar siempre.</li>

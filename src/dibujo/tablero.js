@@ -101,7 +101,7 @@ export function tableroFijo(m){
   let s = '<rect x="0" y="0" width="'+w+'" height="'+h+'" fill="#1747A6"/>';
   for (let i = 1; i < m.ancho; i++) s += '<line class="celda-linea" x1="'+i*T+'" y1="0" x2="'+i*T+'" y2="'+h+'"/>';
   for (let j = 1; j < m.alto; j++) s += '<line class="celda-linea" x1="0" y1="'+j*T+'" x2="'+w+'" y2="'+j*T+'"/>';
-  s += '<rect x="'+(m.inicio.x*T+8)+'" y="'+(m.inicio.y*T+8)+'" width="84" height="84" rx="14" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-dasharray="10 8"/>';
+  if (m.inicio) s += '<rect x="'+(m.inicio.x*T+8)+'" y="'+(m.inicio.y*T+8)+'" width="84" height="84" rx="14" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-dasharray="10 8"/>';
   m.rocas.forEach(c => { const [x,y] = c.split(',').map(Number); s += roca(x,y); });
   if (m.enemigo) {
     const c = m.enemigo.camino, a = c[0], b = c[c.length-1];
@@ -114,7 +114,7 @@ export function tableroFijo(m){
 /* Capa que cambia mientras se juega. Si el tablero todavía no se sorteó, muestra signos de pregunta. */
 export function tableroVivo(m, est, falla){
   const v = est.variante;
-  let s = meta(m.meta.x, m.meta.y, est.x === m.meta.x && est.y === m.meta.y);
+  let s = m.meta ? meta(m.meta.x, m.meta.y, est.x === m.meta.x && est.y === m.meta.y) : '';
   m.chisperos.forEach((c,i) => { s += chispas(Motor.celdasDeChispas(est, m, i), c.dir, !!v && Motor.chisperoActivo(est, i)); });
   est.rastro.forEach(c => { if (c === est.x+','+est.y) return; const [x,y] = c.split(',').map(Number); s += '<circle cx="'+(x*T+50)+'" cy="'+(y*T+88)+'" r="6" fill="#FFFFFF" opacity=".85"/>'; });
   m.engranajes.forEach((p,i) => { if (!est.juntados.has(i)) s += engranaje(p.x,p.y); });
@@ -138,6 +138,25 @@ export function tableroVivo(m, est, falla){
     s += '<g stroke="#FF3B3B" stroke-width="10" stroke-linecap="round"><line x1="'+(X+25)+'" y1="'+(Y+25)+'" x2="'+(X+75)+'" y2="'+(Y+75)+'"/><line x1="'+(X+75)+'" y1="'+(Y+25)+'" x2="'+(X+25)+'" y2="'+(Y+75)+'"/></g>';
   }
   return s;
+}
+
+/* El tablero del editor: todo a la vista, aunque todavía falte la salida o la bandera. */
+export function tableroEditor(m, pj){
+  const est = Motor.crearEstado({ ...m, inicio:m.inicio || { x:-9, y:-9 } }, Motor.variantes(m)[0]);
+  est.rastro = [];
+  let s = tableroFijo(m) + tableroVivo(m, est, null);
+  if (m.enemigo) s += enCelda(m.enemigo.camino[0].x, m.enemigo.camino[0].y, CHATARRIN);
+  if (m.inicio && pj) s += enCelda(m.inicio.x, m.inicio.y, contenidoPersonaje(pj));
+  return s;
+}
+
+/* Un casillero suelto, para los botones de la paleta del editor. */
+export function muestra(letra){
+  if (letra === 'chatarrin') return '<rect width="100" height="100" fill="#1747A6"/>' + enCelda(0, 0, CHATARRIN);
+  if (letra === '.') return '<rect width="100" height="100" fill="#1747A6"/><g stroke="#16163A" stroke-width="5" stroke-linejoin="round">'+
+    '<path d="M22 62 L56 28 L82 54 L58 78 L38 78 Z" fill="#F48FB1"/><path d="M22 62 L38 78 L58 78 L44 48 Z" fill="#FFFFFF"/></g>';
+  const m = Motor.leerMapa([letra], {});
+  return tableroEditor(m, null).replace(/<rect x="2" y="2"[^>]*\/>/, '');
 }
 
 export function enemigoEnTablero(){

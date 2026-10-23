@@ -79,6 +79,36 @@ export const PASO = {
   reinicio:{ titulo:'Todo vuelve al principio', texto:'Tu programa sigue igual. Tocá Ejecutar o Paso.' }
 };
 
+/* ----- Inventá tu nivel ----- */
+export const EDITOR = {
+  titulo:'Inventá tu nivel',
+  misNiveles:'Mis niveles',
+  sinNiveles:'Todavía no inventaste ningún nivel. Tocá "Nuevo nivel" para empezar.',
+  sinNombre:'Mi nivel',
+  cantidad:n => n === 0 ? 'Todavía ninguno' : n === 1 ? '1 nivel' : n+' niveles',
+  herramientas:{ '.':'Goma', '#':'Roca', S:'Salida', M:'Bandera', G:'Engranaje', L:'Lámpara', B:'Botón', P:'Compuerta',
+                 T:'Semáforo', H:'Escudo', E:'Bulón', chispero:'Chispero', chatarrin:'Chatarrín' },
+  direcciones:{ '<':'Tira a la izquierda', '>':'Tira a la derecha', '^':'Tira hacia arriba', v:'Tira hacia abajo' },
+  bloques:{ mov:'Flechas', act:'Encender', btn:'Apretar', esperar:'Esperar', garrote:'Garrote', loop:'Repetir', si:'Si' },
+  sinLimite:'Sin límite',
+  limite:n => n+' bloques',
+  chatarrinDesde:'Tocá dónde empieza Chatarrín.',
+  chatarrinHasta:'Ahora tocá dónde termina su camino, en la misma fila o columna.',
+  chatarrinListo:'¡Listo! Chatarrín va y viene por la línea de puntos.',
+  listo:'¡Listo para probar! Tocá Probar.',
+  antes:'Antes de probar:',
+  introPrueba:(nombre, autor) => 'Probá "'+nombre+'"'+(autor ? ', de '+autor : '')+'. Llegá a la bandera.',
+  datoPrueba:'Inventar un nivel también es programar: pensaste un problema para que lo resuelva otra persona.',
+  probando:'Probando',
+  ganado:{ titulo:'¡Tu nivel se puede ganar!', texto:'Quedó marcado como probado en esta compu.' },
+  volverEditar:'Editar el nivel',
+  borrar:nombre => '¿Borrar "'+nombre+'"? No se puede deshacer.',
+  probado:'Probado',
+  sinProbar:'Sin probar',
+  de:autor => 'De '+autor,
+  jugar:'Jugar', editar:'Editar', borrarBtn:'Borrar'
+};
+
 /* ----- pantalla final ----- */
 export const FINAL = {
   saltado:{

@@ -1,17 +1,16 @@
 /* Pantalla de inicio: una tarjeta por cada modo de src/modos/. No conoce ningún modo en particular. */
 import { MODOS } from '../modos/index.js';
 import { $ } from './dom.js';
-import { cancelarCorrida } from './ejecucion.js';
+import { AL_TERMINAR, cancelarCorrida } from './ejecucion.js';
 import { E, guardar, P } from './estado.js';
 import { cargarNivel } from './niveles.js';
+import { mostrarPantalla } from './pantallas.js';
 import { cerrarTodo } from './ventanas.js';
 
 /* Lo que un modo puede pedir al arrancar. Otros módulos de la interfaz suman cosas acá (por ejemplo, el editor). */
 export const APP = {
   jugarNiveles(id){ salirDelInicio(id); E.dif = id; cargarNivel(P().nivel, P().hecho); }
 };
-
-export const enInicio = () => document.body.classList.contains('en-inicio');
 
 export function textoAvance(a){
   if (!a) return '';
@@ -33,7 +32,8 @@ export function dibujarInicio(){
 
 export function mostrarInicio(){
   cancelarCorrida(); cerrarTodo();
-  document.body.classList.add('en-inicio');
+  E.prueba = null; AL_TERMINAR.ganar = null;
+  mostrarPantalla('en-inicio');
   document.body.classList.remove('dificil');
   $('tituloNivel').innerHTML = '';
   dibujarInicio();
@@ -41,7 +41,7 @@ export function mostrarInicio(){
 }
 
 export function salirDelInicio(modo){
-  document.body.classList.remove('en-inicio');
+  mostrarPantalla(null);
   E.modo = modo; guardar();
 }
 

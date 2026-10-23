@@ -5,3 +5,4 @@ export * from './programa.js';
 export * from './reglas.js';
 export * from './interprete.js';
 export * from './validar.js';
+export * from './editor.js';

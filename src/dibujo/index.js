@@ -2,5 +2,5 @@
 export { T, suelto } from './util.js';
 export { personajeSuelto } from './personajes.js';
 export { ENEMIGOS } from './enemigos.js';
-export { FRENTE, tableroFijo, tableroVivo, personajeEnTablero, enemigoEnTablero } from './tablero.js';
+export { FRENTE, tableroFijo, tableroVivo, personajeEnTablero, enemigoEnTablero, tableroEditor, muestra } from './tablero.js';
 export { maquina, total } from './avance.js';

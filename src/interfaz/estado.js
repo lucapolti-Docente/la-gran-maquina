@@ -10,14 +10,17 @@ export const E = {
   mapa:null, prog:[], cursor:{ ruta:[], i:0 },
   corrida:null,          // { est, gen, auto, timer, terminada }
   intentos:0,            // corridas en este nivel (el primer intento de un nivel de depurar usa un tablero donde falla)
-  tableroPedido:null     // tablero elegido con "Probar con el tablero donde falla"
+  tableroPedido:null,    // tablero elegido con "Probar con el tablero donde falla"
+  misNiveles:[],         // niveles inventados (ver interfaz/mis-niveles.js)
+  edicion:null,          // el nivel inventado que está abierto en el editor
+  prueba:null            // { nivel } cuando se juega un nivel inventado
 };
 
 export const P = () => E.progreso[E.dif];
 
 export const niveles = () => NIVELES[E.dif];
 
-export const nivelActual = () => niveles()[P().nivel];
+export const nivelActual = () => E.prueba ? E.prueba.nivel : niveles()[P().nivel];
 
 export function guardar(){
   const prog = {};

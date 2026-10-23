@@ -10,6 +10,8 @@ import { E } from './interfaz/estado.js';
 import { aplicarMayus } from './interfaz/ventanas.js';
 import { conectar } from './interfaz/controles.js';
 import { conectarInicio, mostrarInicio } from './interfaz/inicio.js';
+import { conectarEditor } from './interfaz/editor-nivel.js';
+import { leerMisNiveles } from './interfaz/mis-niveles.js';
 
 function iniciar(){
   const g = Guardado.leer();
@@ -29,6 +31,8 @@ function iniciar(){
   aplicarMayus();
   conectar();
   conectarInicio();
+  conectarEditor();
+  leerMisNiveles();
   mostrarInicio();
 }
 

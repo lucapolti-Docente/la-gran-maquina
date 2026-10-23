@@ -1,0 +1,141 @@
+/* Inventá tu nivel: "Mis niveles", el editor y el juego en modo prueba. */
+
+/* ----- qué se ve en cada pantalla ----- */
+.pantalla{display:none}
+body.en-mis-niveles .mis-niveles{display:flex}
+body.en-editor .editor-nivel{display:grid}
+body.en-mis-niveles .juego, body.en-editor .juego{display:none}
+body.en-mis-niveles [data-solo-juego]:not([data-accion="inicio"]), body.en-editor [data-solo-juego]:not([data-accion="inicio"]){display:none}
+body:not(.en-prueba) [data-solo-prueba]{display:none!important}
+body.en-prueba [data-no-prueba]{display:none}
+
+/* ----- botón Editar en la barra (modo prueba) ----- */
+.btn-barra{flex:none;display:flex;align-items:center;gap:6px;min-height:44px;padding:4px 14px;border:3px solid var(--papel);border-radius:10px;background:var(--energia);color:#16163A;font-weight:bold;font-size:17px}
+.btn-barra .ico{width:22px;height:22px}
+
+/* ----- Mis niveles ----- */
+.mis-niveles{flex:1;min-height:0;flex-direction:column;gap:10px;padding:14px;max-width:1200px;width:100%;margin:0 auto}
+.cab-pantalla{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.cab-pantalla h2{margin:0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:28px}
+.btn-grande{display:flex;align-items:center;gap:8px;min-height:60px;padding:6px 20px;border:3px solid var(--tinta);border-radius:14px;background:var(--ok);color:#fff;font-weight:bold;font-size:20px;box-shadow:var(--sombra)}
+.btn-grande:active{transform:translateY(2px);box-shadow:none}
+.btn-grande .ico{width:28px;height:28px}
+.nota-guardado{margin:0;font-size:15px}
+.lista-niveles{flex:1;min-height:0;overflow:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;align-content:start;padding:4px}
+.vacio-lista{font-size:18px}
+.tarjeta-nivel{display:flex;flex-direction:column;gap:8px;padding:12px;background:var(--papel);border:3px solid var(--tinta);border-radius:16px;box-shadow:var(--sombra)}
+.mini-tablero{width:100%;height:120px;display:block}
+.datos-nivel{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.datos-nivel b{font-size:20px;flex-basis:100%}
+.estado-nivel{font-weight:bold;font-size:15px;padding:1px 10px;border-radius:999px;background:var(--suave);border:2px solid var(--tinta)}
+.estado-nivel.probado{background:var(--ok);color:#fff;border-color:var(--ok)}
+.botones-nivel{display:grid;grid-template-columns:1fr 1fr 60px;gap:8px}
+.peligro-chico{color:var(--error);border-color:var(--error)}
+
+/* ----- Editor ----- */
+.editor-nivel{
+  flex:1;min-height:0;gap:12px;padding:12px;
+  grid-template-columns:minmax(0,1fr) minmax(340px,420px);
+  grid-template-rows:minmax(0,1fr) auto;
+  grid-template-areas:"tablero panel" "mensajes panel";
+}
+.ed-tablero{grid-area:tablero;display:grid;place-items:center;min-height:0;min-width:0;padding:8px}
+#tableroEditor{width:100%;height:100%;display:block;touch-action:none;user-select:none;cursor:crosshair}
+.celda-problema{fill:none;stroke:#FF3B3B;stroke-width:8;stroke-dasharray:14 8}
+.marca-chatarrin{fill:none;stroke:#FF8A65;stroke-width:9}
+.ed-panel{grid-area:panel;display:flex;flex-direction:column;gap:10px;padding:12px;min-height:0;overflow:auto}
+.ed-acciones{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pestanas{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.pestana-btn{min-height:48px;border:3px solid var(--tinta);border-radius:12px;background:var(--suave);font-weight:bold;font-size:17px}
+.pestana-btn[aria-selected="true"]{background:var(--tinta);color:var(--papel)}
+.pestana{display:flex;flex-direction:column;gap:10px}
+.pestana[hidden]{display:none}
+.herramientas{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.herramienta{display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px;min-height:64px;border:3px solid var(--tinta);border-radius:12px;background:var(--suave);font-size:12px;font-weight:bold;min-width:0}
+.herramienta svg{width:40px;height:40px;border-radius:6px}
+.herramienta span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.herramienta[aria-pressed="true"]{background:var(--energia);color:#16163A;outline:4px solid var(--cursor);outline-offset:1px}
+.direcciones{display:flex;gap:6px}
+.direcciones[hidden]{display:none}
+.dir-btn{flex:1;display:grid;place-items:center;padding:4px}
+.dir-btn[aria-pressed="true"],.opcion[aria-pressed="true"]{background:var(--energia);color:#16163A}
+.tamanos{display:flex;flex-wrap:wrap;gap:8px 16px}
+.tamano{display:flex;align-items:center;gap:8px;font-weight:bold}
+.tamano b{min-width:2.2em;text-align:center;font-size:20px}
+.tamano span{min-width:5em}
+.tamano .corto{display:none}
+.mas-menos{width:52px;height:52px;border:3px solid var(--tinta);border-radius:12px;background:var(--suave);font-size:26px;font-weight:bold;line-height:1}
+.mas-menos[disabled]{opacity:.35}
+.ayuda-ed{margin:0}
+.interruptores{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.interruptor{display:flex;align-items:center;gap:6px;min-height:52px;padding:4px 10px;border:3px solid var(--tinta);border-radius:12px;color:#fff;font-weight:bold;font-size:16px;opacity:.5}
+.interruptor[aria-pressed="true"]{opacity:1;outline:4px solid var(--energia);outline-offset:1px}
+.interruptor .tilde{margin-left:auto;font-size:20px}
+.interruptor.c-mov{background:var(--mov)} .interruptor.c-act{background:var(--act);color:#16163A} .interruptor.c-btn{background:var(--btn)}
+.interruptor.c-esp{background:var(--esp)} .interruptor.c-gar{background:var(--gar)} .interruptor.c-loop{background:var(--loop)} .interruptor.c-si{background:var(--si)}
+#valMax{min-width:6em}
+.campo{display:flex;flex-direction:column;gap:4px;font-weight:bold}
+.campo input{min-height:52px;font:inherit;font-size:20px;padding:4px 12px;border:3px solid var(--tinta);border-radius:12px;background:var(--papel);color:var(--tinta)}
+body.mayus .campo input{text-transform:uppercase}
+.ed-mensajes{grid-area:mensajes;padding:10px 14px;font-size:17px}
+.ed-mensajes p{margin:0 0 4px}
+.ed-mensajes .titulo{font-weight:bold}
+.ed-mensajes .titulo.ok{color:var(--ok)}
+.ed-mensajes .problemas{margin:0;padding-left:22px}
+.ed-mensajes.con-problemas{border-color:var(--cursor)}
+.aviso-ed{color:var(--cursor);font-weight:bold}
+.sacude{animation:choca .4s}
+
+/* ----- jugando un nivel inventado ----- */
+.info-prueba{display:none}
+body.en-prueba #maquinaChica, body.en-prueba #cuentaPiezas{display:none}
+body.en-prueba .info-prueba{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;height:100%}
+.info-prueba b{font-size:20px}
+.fila-botones{display:flex;flex-wrap:wrap;gap:8px}
+.btn-siguiente.secundario{background:var(--papel);color:var(--tinta)}
+
+/* ----- celular ----- */
+@media (max-width:899px), (max-aspect-ratio:1/1){
+  .btn-barra{min-height:40px;padding:2px 10px;font-size:15px;margin-left:auto}
+  .mis-niveles{padding:8px;gap:6px}
+  .cab-pantalla h2{font-size:22px}
+  .btn-grande{min-height:52px;padding:4px 12px;font-size:17px}
+  .nota-guardado{font-size:13px}
+  .lista-niveles{grid-template-columns:1fr;gap:8px}
+  .tarjeta-nivel{flex-direction:row;flex-wrap:wrap;align-items:center;padding:8px;gap:6px 10px}
+  .mini-tablero{width:110px;height:70px;flex:none}
+  .datos-nivel{flex:1;min-width:0}
+  .datos-nivel b{font-size:17px}
+  .botones-nivel{flex-basis:100%;grid-template-columns:1fr 1fr 52px;gap:6px}
+  .botones-nivel .accion{min-height:44px}
+  .editor-nivel{
+    padding:6px;gap:6px;
+    grid-template-columns:minmax(0,1fr);
+    grid-template-rows:minmax(96px,1fr) auto auto;
+    grid-template-areas:"tablero" "mensajes" "panel";
+  }
+  .ed-tablero{padding:4px}
+  .ed-panel{padding:6px;gap:6px;overflow:visible}
+  .ed-acciones .accion{min-height:48px}
+  .pestana-btn{min-height:42px;font-size:15px}
+  .herramientas{grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+  .herramienta{min-height:44px;padding:2px}
+  .herramienta svg{width:34px;height:34px}
+  .herramienta span{display:none}
+  .tamanos{flex-wrap:nowrap;gap:8px;justify-content:space-between}
+  .tamano{gap:4px;font-size:14px}
+  .tamano span{min-width:0}
+  .tamano .largo{display:none}
+  .tamano .corto{display:inline;font-size:24px}
+  .ayuda-ed{display:none}
+  .tamano b{font-size:17px;min-width:1.6em}
+  .mas-menos{width:44px;height:44px;font-size:22px}
+  #pestanaBloques .tamano{justify-content:center}
+  .interruptores{gap:4px}
+  .interruptor{min-height:44px;font-size:14px;padding:2px 8px}
+  .campo input{min-height:46px;font-size:18px}
+  .ed-mensajes{padding:4px 10px;font-size:14px;max-height:64px;overflow:auto}
+  .ed-mensajes p{margin:0 0 2px}
+  .info-prueba b{font-size:14px}
+  .info-prueba{font-size:12px}
+}
