@@ -63,6 +63,22 @@ export const LOGROS = {
   espera:' Te quedaste quieto un turno.'
 };
 
+/* ----- ejecutar y paso a paso ----- */
+export const PASO = {
+  titulo:'Paso a paso',
+  ejecutando:'Ejecutando…',
+  mira:'Mirá qué instrucción se cumple en cada momento.',
+  azar:'El tablero cambió: mirá qué salió en cada signo de pregunta.',
+  sigue:'Sigue desde donde estabas.',
+  si:'<b>Sí</b>: se hace lo que está adentro.',
+  no:'<b>No</b>: se saltea lo que está adentro.',
+  vuelta:(v, n) => 'vuelta '+v+' de '+n,
+  sigueAhora:quien => 'Sigue: '+quien.charAt(0).toLowerCase()+quien.slice(1)+'.',
+  vacio:{ titulo:'El programa está vacío', texto:'Agregá bloques antes de probar.' },
+  pausa:{ titulo:'En pausa', texto:'Seguí con Paso o con Ejecutar. Para volver al principio, tocá Reiniciar.' },
+  reinicio:{ titulo:'Todo vuelve al principio', texto:'Tu programa sigue igual. Tocá Ejecutar o Paso.' }
+};
+
 /* ----- pantalla final ----- */
 export const FINAL = {
   saltado:{

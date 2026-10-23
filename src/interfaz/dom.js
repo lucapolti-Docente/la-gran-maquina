@@ -15,7 +15,7 @@ export const ICONOS = {
   roca:'<path d="M3 19l3-9 6-5 6 3 3 11z"/>',
   lampara:'<circle cx="12" cy="9" r="6"/><path d="M9 18h6M10 22h4M12 15v3"/>',
   roja:'<rect x="8" y="2" width="8" height="20" rx="3"/><circle cx="12" cy="7.5" r="2.6" fill="#FF3B3B" stroke="none"/><circle cx="12" cy="16.5" r="2.6"/>',
-  play:'<path class="lleno" d="M6 4l14 8-14 8z"/>', stop:'<rect class="lleno" x="5" y="5" width="14" height="14" rx="2"/>'
+  play:'<path class="lleno" d="M6 4l14 8-14 8z"/>', pausa:'<rect class="lleno" x="5" y="4" width="5" height="16" rx="1"/><rect class="lleno" x="14" y="4" width="5" height="16" rx="1"/>', stop:'<rect class="lleno" x="5" y="5" width="14" height="14" rx="2"/>'
 };
 
 export const ico = k => '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">'+ICONOS[k]+'</svg>';

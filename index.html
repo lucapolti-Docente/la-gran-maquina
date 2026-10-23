@@ -48,6 +48,10 @@
           <svg class="ico" viewBox="0 0 24 24"><path class="lleno" d="M4 4l10 8-10 8z"/><path d="M18 4v16"/></svg>
           <span class="txt-largo">Paso</span><span class="txt-corto">Paso</span>
         </button>
+        <button class="accion" id="btnReiniciar" aria-label="Reiniciar: todo vuelve al principio" disabled>
+          <svg class="ico" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.5-5.8M4 4v5h5"/></svg>
+          <span class="txt-largo">Reiniciar</span>
+        </button>
         <button class="accion" id="btnBorrar" aria-label="Borrar instrucción">
           <svg class="ico" viewBox="0 0 24 24"><path d="M21 5H8l-6 7 6 7h13z"/><path d="M11 9l6 6M17 9l-6 6"/></svg>
         </button>
@@ -88,9 +92,9 @@
     <li>Donde hay un signo de pregunta, el tablero cambia en cada intento: tu programa tiene que funcionar siempre.</li>
     <li>La raya naranja muestra dónde se agrega el próximo bloque. Tocá un bloque del programa para mover la raya ahí.</li>
     <li><b>Repetir</b> hace varias veces los bloques que pongas adentro. Tocá el número para cambiar cuántas veces.</li>
-    <li>Si algo falla, el mensaje te dice en qué instrucción fue. Usá <b>Paso</b> para ir de a una.</li>
+    <li>Si algo falla, el mensaje te dice en qué instrucción fue. Usá <b>Paso</b> para ir de a una: la instrucción que sigue queda marcada. Podés seguir con <b>Ejecutar</b>, y <b>Reiniciar</b> (la flecha que gira) vuelve todo al principio sin borrar tu programa.</li>
   </ul>
-  <p class="teclas">Teclado: flechas para moverte, <kbd>E</kbd> encender, <kbd>A</kbd> apretar, <kbd>W</kbd> esperar, <kbd>G</kbd> garrote, <kbd>S</kbd> si, <kbd>R</kbd> repetir, <kbd>2</kbd>–<kbd>9</kbd> veces, <kbd>Enter</kbd> ejecutar, <kbd>P</kbd> paso, <kbd>Retroceso</kbd> borrar. En el celular podés deslizar el dedo sobre el tablero.</p>
+  <p class="teclas">Teclado: flechas para moverte, <kbd>E</kbd> encender, <kbd>A</kbd> apretar, <kbd>W</kbd> esperar, <kbd>G</kbd> garrote, <kbd>S</kbd> si, <kbd>R</kbd> repetir, <kbd>2</kbd>–<kbd>9</kbd> veces, <kbd>Enter</kbd> ejecutar, <kbd>P</kbd> paso, <kbd>0</kbd> reiniciar, <kbd>Retroceso</kbd> borrar. En el celular podés deslizar el dedo sobre el tablero.</p>
 </div>
 
 <div class="ventana" id="vConfig" role="dialog" aria-modal="true" aria-labelledby="tConfig">

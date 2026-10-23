@@ -3,7 +3,7 @@ import * as Dibujo from '../dibujo/index.js';
 import { DIFICULTADES } from '../config.js';
 import { $ } from './dom.js';
 import { agregar, borrar, buscar, cambiarPregunta, cambiarVeces, dibujarPrograma, limpiar } from './editor.js';
-import { cancelarCorrida, corriendo, detener, ejecutar, pasoAPaso } from './ejecucion.js';
+import { cancelarCorrida, corriendo, detener, ejecutar, pasoAPaso, reiniciar } from './ejecucion.js';
 import { E, guardar, P } from './estado.js';
 import { cargarNivel } from './niveles.js';
 import { dibujarTableroFijo, reiniciarPersonaje } from './tablero.js';
@@ -32,6 +32,7 @@ export function conectar(){
   });
   $('btnEjecutar').addEventListener('click', ejecutar);
   $('btnPaso').addEventListener('click', pasoAPaso);
+  $('btnReiniciar').addEventListener('click', reiniciar);
   $('btnBorrar').addEventListener('click', borrar);
   $('btnLimpiar').addEventListener('click', limpiar);
 
@@ -77,6 +78,7 @@ export function conectar(){
     else if (e.key === ' ') { e.preventDefault(); agregar('act'); }
     else if (letras[k]) agregar(letras[k]);
     else if (k === 'p') pasoAPaso();
+    else if (e.key === '0') reiniciar();
     else if (e.key === 'Backspace' || e.key === 'Delete') { e.preventDefault(); borrar(); }
     else if (e.key === 'Enter') { if (document.activeElement && document.activeElement.tagName === 'BUTTON' && document.activeElement.id !== 'btnEjecutar') return; e.preventDefault(); ejecutar(); }
     else if (/^[2-9]$/.test(e.key)) {

@@ -1,5 +1,6 @@
 /* Todas las animaciones del juego. Las clases que las usan están en tablero.css, componentes.css y ventanas.css. */
 @keyframes titila{50%{opacity:.25}}
+@keyframes marca{50%{outline-color:transparent}}
 @keyframes choca{25%{transform:translateX(10px)}50%{transform:translateX(-8px)}75%{transform:translateX(5px)}}
 @keyframes salta{50%{transform:translateY(-18px)}}
 @keyframes aparece{0%{opacity:0}100%{opacity:1}}

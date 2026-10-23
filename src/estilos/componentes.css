@@ -32,6 +32,10 @@
 }
 .chip .num{background:var(--papel);color:var(--tinta);border-radius:6px;min-width:24px;height:24px;display:grid;place-items:center;font-size:14px;padding:0 3px}
 .chip.ahora{outline:5px solid var(--energia);outline-offset:1px;transform:scale(1.08)}
+/* Paso: la instrucción que se cumple con el próximo toque. */
+.chip.proximo{outline:5px dashed var(--cursor);outline-offset:2px;animation:marca 1.2s ease-in-out infinite}
+#mensaje .sigue{color:var(--cursor);font-weight:bold}
+.vuelta{align-self:center;margin-left:4px;padding:2px 8px;border-radius:999px;background:var(--loop);color:#fff;font-weight:bold;font-size:14px;white-space:nowrap}
 .chip.falla{background:var(--error)!important;color:#fff;outline:5px solid var(--error);outline-offset:1px}
 .repetir{display:inline-flex;flex-wrap:wrap;align-items:center;gap:4px;border:3px solid var(--loop);background:rgba(122,63,199,.12);border-radius:12px;padding:4px}
 .repetir.ahora{outline:4px solid var(--energia)}
@@ -49,7 +53,10 @@ body.dificil .barra .nivel b{background:#FF5A1F;color:#FFFFFF}
 .cursor{width:6px;height:46px;border-radius:3px;background:var(--cursor);animation:titila 1s steps(2) infinite;flex:none}
 .limite{font-size:15px;font-weight:bold;margin:0}
 .limite.lleno{color:var(--error)}
-.acciones{display:grid;grid-template-columns:2fr 1.4fr 1fr 1fr;gap:8px}
+/* Notebook: Ejecutar y Paso arriba; Reiniciar, Borrar y Borrar todo abajo. */
+.acciones{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px}
+.acciones .accion{min-width:0;grid-column:span 2}
+#btnEjecutar,#btnPaso,#btnReiniciar{grid-column:span 4}
 .accion{
   display:flex;align-items:center;justify-content:center;gap:6px;min-height:52px;border:3px solid var(--tinta);border-radius:12px;
   background:var(--papel);font-weight:bold;box-shadow:var(--sombra);padding:4px 6px;font-size:16px

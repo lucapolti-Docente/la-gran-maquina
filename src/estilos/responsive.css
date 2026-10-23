@@ -30,7 +30,10 @@
   .programa{flex:none;height:auto;min-height:52px;max-height:min(112px,17vh);padding:4px;gap:4px}
   .chip,.rep-n,.rep-fin,.cursor{height:40px}
   .rep-n{min-width:40px}
-  .acciones{grid-template-columns:2fr 1.5fr 1fr 1fr;gap:5px}
+  .acciones{grid-template-columns:minmax(0,2.5fr) minmax(0,1.7fr) repeat(3,minmax(0,1fr));gap:4px}
+  .accion.principal{font-size:15px}
+  .acciones .accion,#btnEjecutar,#btnPaso,#btnReiniciar{min-width:0;padding-left:2px;padding-right:2px;grid-column:auto}
+  .vuelta{font-size:12px;padding:1px 6px}
   .accion{min-height:48px;font-size:15px}
   .accion .txt-largo{display:none}
   .accion .txt-corto{display:inline}
