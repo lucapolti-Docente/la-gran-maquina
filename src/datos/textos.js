@@ -79,3 +79,29 @@ export const FINAL = {
   },
   faltan:nums => (nums.length === 1 ? 'Te falta el nivel '+nums[0] : 'Te faltan los niveles '+nums.slice(0,-1).join(', ')+' y '+nums[nums.length-1]) + '.'
 };
+
+/* ----- revisar un nivel (editor y tests): qué falta, corto y sin retar ----- */
+const QUE = { roca:'una roca', compuerta:'una compuerta', chispero:'Chispero', bulon:'Bulón', semaforo:'un semáforo', salida:'la salida', bandera:'la bandera' };
+export const VALIDACION = {
+  mapaVacio:() => 'El tablero está vacío.',
+  noRectangular:() => 'Todas las filas tienen que tener el mismo largo.',
+  letraDesconocida:() => 'Hay un casillero con una letra que el juego no conoce.',
+  faltaSalida:() => 'Falta la salida: poné una.',
+  variasSalidas:() => 'Hay más de una salida: dejá una sola.',
+  faltaBandera:() => 'Falta la bandera: poné una.',
+  variasBanderas:() => 'Hay más de una bandera: dejá una sola.',
+  compuertaSinBoton:() => 'Hay una compuerta: poné un botón para abrirla.',
+  botonSinCompuerta:() => 'Hay un botón: poné una compuerta para que abra.',
+  bloqueDesconocido:p => 'Hay un bloque que el juego no conoce: '+p.bloques.join(', ')+'.',
+  sinFlechas:() => 'Elegí al menos una flecha para poder moverse.',
+  maxInvalido:() => 'El límite de bloques tiene que ser 1 o más.',
+  lamparaSinEncender:() => 'Hay lámparas: sumá el bloque Encender.',
+  compuertaSinApretar:() => 'Hay una compuerta: sumá el bloque Apretar.',
+  chatarrinSinRecorrido:() => 'Marcá dónde empieza y dónde termina Chatarrín.',
+  chatarrinNoRecto:() => 'Chatarrín va en línea recta: marcá el final en la misma fila o columna.',
+  chatarrinAfuera:() => 'El camino de Chatarrín se sale del tablero.',
+  chatarrinPisa:p => 'Chatarrín no puede pasar por '+QUE[p.que]+'.',
+  chispaAtraviesa:p => 'Las chispas de Chispero no pueden atravesar a '+QUE[p.que]+'.',
+  banderaInalcanzable:() => 'No hay camino hasta la bandera.',
+  cosasInalcanzables:() => 'Hay cosas a las que no se puede llegar.'
+};

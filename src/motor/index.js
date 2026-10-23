@@ -4,3 +4,4 @@ export * from './mapa.js';
 export * from './programa.js';
 export * from './reglas.js';
 export * from './interprete.js';
+export * from './validar.js';

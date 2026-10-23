@@ -17,3 +17,10 @@ w = esperar, g = garrote, x3( ... ) = repetir 3 veces,
 ?e( ... ) = si hay enemigo enfrente, ?o( ... ) = si hay roca enfrente,
 ?l( ... ) = si la luz de enfrente está roja, ?b( ... ) = si hay una lámpara acá
 ```
+
+## Qué revisa `npm test` en cada nivel
+- La `solucion` gana en todos los tableros posibles, con los bloques del nivel y dentro del límite (`max`).
+- El mapa tiene sentido (`src/motor/validar.js`, la misma revisión que usa el editor): una sola salida y una sola bandera,
+  compuerta con botón, Chatarrín en línea recta sin pasar por rocas, compuertas, Chispero, Bulón, semáforo, salida ni bandera,
+  chispas que no atraviesan a Bulón ni al semáforo, y camino posible hasta la bandera y hasta cada engranaje, lámpara y botón.
+- Cada nivel suma a lo sumo una cosa nueva respecto de los anteriores.
