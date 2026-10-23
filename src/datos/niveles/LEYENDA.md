@@ -9,7 +9,8 @@ o roca al azar (en cada intento aparece una sola de las marcadas)
 l lámpara al azar (en cada intento puede estar o no)
 T semáforo (empieza rojo o verde al azar y cambia en cada turno)
 H escudo (protege de las chispas)
-< > ^ v Chispero (tira chispas hacia ese lado, un turno sí y uno no)
+< > ^ v Chispero (tira chispas hacia ese lado, un turno sí y uno no; las frenan las rocas,
+        las compuertas cerradas, otro Chispero, Bulón encendido y el semáforo)
 enemigo: { desde:[x,y], hasta:[x,y] } es Chatarrín: va y viene en línea recta
 bloques: 'mov' da las cuatro flechas; también se puede dar solo 'u','d','l','r'
 Programas de ejemplo: u d l r = flechas, a = encender, p = apretar,
@@ -22,5 +23,5 @@ w = esperar, g = garrote, x3( ... ) = repetir 3 veces,
 - La `solucion` gana en todos los tableros posibles, con los bloques del nivel y dentro del límite (`max`).
 - El mapa tiene sentido (`src/motor/validar.js`, la misma revisión que usa el editor): una sola salida y una sola bandera,
   compuerta con botón, Chatarrín en línea recta sin pasar por rocas, compuertas, Chispero, Bulón, semáforo, salida ni bandera,
-  chispas que no atraviesan a Bulón ni al semáforo, y camino posible hasta la bandera y hasta cada engranaje, lámpara y botón.
+  y camino posible hasta la bandera y hasta cada engranaje, lámpara y botón.
 - Cada nivel suma a lo sumo una cosa nueva respecto de los anteriores.

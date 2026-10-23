@@ -9,8 +9,6 @@ const LETRAS = '.#SMGLlBPEeoTH<>^v';
 /* Lo que no puede pisar Chatarrín en su recorrido. */
 const NO_PISA = { '#':'roca', 'o':'roca', 'P':'compuerta', '<':'chispero', '>':'chispero', '^':'chispero', 'v':'chispero',
                   'E':'bulon', 'e':'bulon', 'T':'semaforo', 'S':'salida', 'M':'bandera' };
-/* Lo que frena las chispas: si una chispa pasa por acá, sale desde adentro de algo. */
-const FRENA_CHISPA = { 'E':'bulon', 'e':'bulon', 'T':'semaforo' };
 
 const flechas = b => b.includes('mov') || ['u','d','l','r'].some(d => b.includes(d));
 const dirsDadas = b => b.includes('mov') ? ['u','d','l','r'] : ['u','d','l','r'].filter(d => b.includes(d));
@@ -60,18 +58,6 @@ export function validarNivel(nivel){
       Object.keys(pisa).forEach(que => add('chatarrinPisa', pisa[que], { que }));
     }
   }
-
-  // Chispas: van en línea recta hasta una roca, otro chispero, una compuerta o el borde, y no pueden atravesar a nadie.
-  filas.forEach((f,y) => [...f].forEach((ch,x) => {
-    if (!'<>^v'.includes(ch)) return;
-    const [dx,dy] = DIRS[{'<':'l','>':'r','^':'u','v':'d'}[ch]];
-    let cx = x + dx, cy = y + dy;
-    while (cel(cx,cy) !== null && !'#o<>^vP'.includes(cel(cx,cy))) {
-      const c = cel(cx,cy);
-      if (FRENA_CHISPA[c]) add('chispaAtraviesa', [{x:cx,y:cy}], { que:FRENA_CHISPA[c], desde:{x,y} });
-      cx += dx; cy += dy;
-    }
-  }));
 
   // ¿Se llega a todo? (sin contar enemigos que se mueven ni chispas: eso lo resuelve quien juega)
   if (S.length === 1 && M.length === 1 && flechas(bl)) {

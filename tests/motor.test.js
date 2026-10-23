@@ -39,6 +39,15 @@ describe('Motor', () => {
     }
   });
 
+  it('las chispas frenan en Bulón encendido y en el semáforo, y pasan cuando Bulón está apagado', () => {
+    const m = Motor.leerMapa(['S.E..<', 'T....<'], {});
+    const est = Motor.crearEstado(m, Motor.variantes(m)[0]);
+    expect(Motor.celdasDeChispas(est, m, 0).map(c => c.x)).toEqual([4, 3]);
+    expect(Motor.celdasDeChispas(est, m, 1).map(c => c.x)).toEqual([4, 3, 2, 1]);
+    est.apagados.add('g0');
+    expect(Motor.celdasDeChispas(est, m, 0).map(c => c.x)).toEqual([4, 3, 2, 1, 0]);
+  });
+
   it('numera las instrucciones de adentro de Repetir y Si', () => {
     const prog = Motor.leerPrograma('r x3(?e(g) r) d');
     const nums = Motor.numerar(prog);

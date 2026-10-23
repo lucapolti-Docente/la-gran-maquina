@@ -8,15 +8,11 @@ import { validarNivel } from '../src/motor/index.js';
 const codigos = nivel => validarNivel(nivel).map(p => p.codigo);
 const base = { bloques:['mov','act','btn','garrote'] };
 
-/* Problemas conocidos que esperan una decisión de diseño (ver la revisión de la etapa 1). Se borran al arreglarlos. */
-const PENDIENTES = { 'dificil 10':['chispaAtraviesa'], 'dificil 15':['chispaAtraviesa'] };
-
 describe('Validación de los niveles del juego', () => {
   for (const [dif, lista] of Object.entries(NIVELES)) {
     lista.forEach((n, i) => {
       it(dif + ' ' + (i + 1) + '. ' + n.titulo + ': no tiene problemas', () => {
-        const pendientes = PENDIENTES[dif + ' ' + (i + 1)] || [];
-        expect(validarNivel(n).filter(p => !pendientes.includes(p.codigo))).toEqual([]);
+        expect(validarNivel(n)).toEqual([]);
       });
     });
   }
@@ -42,8 +38,6 @@ describe('Reglas de la validación', () => {
     ['chatarrinPisa', { mapa:['S.#M', '....'], enemigo:{ desde:[2,0], hasta:[2,1] } }],
     ['chatarrinPisa', { mapa:['SBP.M', '.....'], enemigo:{ desde:[2,0], hasta:[2,1] } }],
     ['chatarrinPisa', { mapa:['S..M', '....'], enemigo:{ desde:[0,0], hasta:[0,1] } }],
-    ['chispaAtraviesa', { mapa:['SE.<', 'M...'] }],
-    ['chispaAtraviesa', { mapa:['ST.<', 'M...'] }],
     ['banderaInalcanzable', { mapa:['S#M'] }],
     ['banderaInalcanzable', { mapa:['SEM'], bloques:['mov'] }],
     ['cosasInalcanzables', { mapa:['S.M#G'] }]
@@ -56,10 +50,6 @@ describe('Reglas de la validación', () => {
 
   it('un nivel simple y bien armado no tiene problemas', () => {
     expect(codigos({ mapa:['S.L.', 'B.PM'], bloques:['mov','act','btn'], enemigo:{ desde:[1,0], hasta:[1,1] } })).toEqual([]);
-  });
-
-  it('las chispas se frenan en una roca antes de llegar a Bulón', () => {
-    expect(codigos({ ...base, mapa:['SE#<', 'M...'] })).not.toContain('chispaAtraviesa');
   });
 
   it('marca el casillero del problema', () => {

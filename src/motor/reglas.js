@@ -42,7 +42,7 @@ export function chisperoActivo(est, i){ return !est.apagados.has('k'+i) && est.t
 export function celdasDeChispas(est, m, i){
   const c = m.chisperos[i], [dx,dy] = DIRS[c.dir], celdas = [];
   let x = c.x + dx, y = c.y + dy;
-  while (x >= 0 && y >= 0 && x < m.ancho && y < m.alto && !rocaEn(est, m, x, y) && chisperoEn(m, x, y) < 0 && !(!est.abiertas && en(m.compuertas, x, y) >= 0)) {
+  while (x >= 0 && y >= 0 && x < m.ancho && y < m.alto && !rocaEn(est, m, x, y) && chisperoEn(m, x, y) < 0 && guardiaEn(est, m, x, y) < 0 && en(m.semaforos, x, y) < 0 && !(!est.abiertas && en(m.compuertas, x, y) >= 0)) {
     celdas.push({x,y}); x += dx; y += dy;
   }
   return celdas;

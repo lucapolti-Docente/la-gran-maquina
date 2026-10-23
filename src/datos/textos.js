@@ -101,7 +101,6 @@ export const VALIDACION = {
   chatarrinNoRecto:() => 'Chatarrín va en línea recta: marcá el final en la misma fila o columna.',
   chatarrinAfuera:() => 'El camino de Chatarrín se sale del tablero.',
   chatarrinPisa:p => 'Chatarrín no puede pasar por '+QUE[p.que]+'.',
-  chispaAtraviesa:p => 'Las chispas de Chispero no pueden atravesar a '+QUE[p.que]+'.',
   banderaInalcanzable:() => 'No hay camino hasta la bandera.',
   cosasInalcanzables:() => 'Hay cosas a las que no se puede llegar.'
 };
