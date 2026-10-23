@@ -31,10 +31,34 @@ export function borrarNivel(id){ E.misNiveles = E.misNiveles.filter(n => n.id !=
 
 export const nuevoId = () => 'n' + Date.now().toString(36) + Math.floor(Math.random() * 1e4).toString(36);
 
+/* ----- archivo de texto (formato en motor/archivo.js) ----- */
+export function guardarEnArchivo(){
+  const texto = '﻿' + Motor.nivelesATexto(E.misNiveles); // la marca BOM ayuda al Bloc de notas viejo con las tildes
+  const url = URL.createObjectURL(new Blob([texto], { type:'text/plain;charset=utf-8' }));
+  const a = document.createElement('a');
+  a.href = url; a.download = EDITOR.nombreArchivo;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  return E.misNiveles.length;
+}
+
+/* Suma los niveles del archivo que no estaban. Devuelve cuántos entraron, cuántos ya estaban y cuántos no se leyeron. */
+export function abrirTexto(texto){
+  const { niveles, malos } = Motor.textoANiveles(texto);
+  const nuevos = [];
+  niveles.forEach(nv => {
+    if ([...E.misNiveles, ...nuevos].some(n => Motor.mismoNivel(n, nv))) return;
+    nuevos.push({ ...nv, id:nuevoId() });
+  });
+  if (nuevos.length) { E.misNiveles.unshift(...nuevos); guardarMisNiveles(); } // arriba de todo, para verlos enseguida
+  return { nuevos:nuevos.length, repetidos:niveles.length - nuevos.length, malos };
+}
+
 const escapar = s => String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[c]);
 
 export function dibujarMisNiveles(){
   const lista = E.misNiveles;
+  $('btnGuardarArchivo').disabled = !lista.length;
   if (!lista.length) { $('listaMisNiveles').innerHTML = '<p class="vacio-lista">'+EDITOR.sinNiveles+'</p>'; return; }
   $('listaMisNiveles').innerHTML = lista.map(n => {
     const m = Motor.leerMapa(n.mapa, n), T = Dibujo.T;

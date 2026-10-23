@@ -99,4 +99,6 @@ La regla principal: **el motor no sabe nada de la pantalla**. Por eso se puede p
 
 Lo que se guarda en el navegador: `gran-maquina-v4` (modo, personaje, letra, velocidad, sonido y avance de cada modo) y `gran-maquina-mis-niveles` (los niveles inventados). Las claves viejas `gran-maquina-v3` y `-v2` se leen una vez, se pasan a v4 y no se borran.
 
+Para llevar niveles inventados a otra compu: **Mis niveles → Guardar en archivo** baja `niveles-gran-maquina.txt`, y en la otra compu **Abrir archivo** los suma (los repetidos no se duplican). El archivo se puede leer y corregir con el Bloc de notas; el formato está explicado en `src/motor/archivo.js`. "Probado" no viaja: cada compu lo gana de nuevo.
+
 El progreso queda guardado en cada navegador y en cada sitio por separado: lo que se avanzó en GitHub Pages no aparece en el archivo del pendrive, y al revés. Para ubicar a un chico en su nivel, usá **Saltar nivel** en el menú.

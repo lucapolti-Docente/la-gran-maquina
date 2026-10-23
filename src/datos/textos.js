@@ -87,7 +87,10 @@ export const EDITOR = {
   sinNombre:'Mi nivel',
   cantidad:n => n === 0 ? 'Todavía ninguno' : n === 1 ? '1 nivel' : n+' niveles',
   herramientas:{ '.':'Goma', '#':'Roca', S:'Salida', M:'Bandera', G:'Engranaje', L:'Lámpara', B:'Botón', P:'Compuerta',
-                 T:'Semáforo', H:'Escudo', E:'Bulón', chispero:'Chispero', chatarrin:'Chatarrín' },
+                 T:'Semáforo', H:'Escudo', E:'Bulón', chispero:'Chispero', chatarrin:'Chatarrín',
+                 e:'Bulón a veces', o:'Roca a veces', l:'Lámpara a veces' },
+  ayudaAzar:{ e:'Bulón a veces: en cada intento puede estar o no.', o:'Roca a veces: de todas las marcadas, en cada intento aparece una sola.',
+              l:'Lámpara a veces: en cada intento puede estar o no.' },
   direcciones:{ '<':'Tira a la izquierda', '>':'Tira a la derecha', '^':'Tira hacia arriba', v:'Tira hacia abajo' },
   bloques:{ mov:'Flechas', act:'Encender', btn:'Apretar', esperar:'Esperar', garrote:'Garrote', loop:'Repetir', si:'Si' },
   sinLimite:'Sin límite',
@@ -106,7 +109,16 @@ export const EDITOR = {
   probado:'Probado',
   sinProbar:'Sin probar',
   de:autor => 'De '+autor,
-  jugar:'Jugar', editar:'Editar', borrarBtn:'Borrar'
+  jugar:'Jugar', editar:'Editar', borrarBtn:'Borrar',
+  guardarArchivo:'Guardar en archivo', abrirArchivo:'Abrir archivo',
+  nombreArchivo:'niveles-gran-maquina.txt',
+  archivoGuardado:n => (n === 1 ? 'Se guardó 1 nivel' : 'Se guardaron '+n+' niveles')+' en el archivo. Buscalo en Descargas.',
+  archivoAbierto:(nuevos, repetidos, malos) => [
+    nuevos === 0 ? 'No había niveles nuevos.' : nuevos === 1 ? '¡Se agregó 1 nivel!' : '¡Se agregaron '+nuevos+' niveles!',
+    repetidos ? (repetidos === 1 ? '1 ya estaba.' : repetidos+' ya estaban.') : '',
+    malos ? (malos === 1 ? '1 no se pudo leer.' : malos+' no se pudieron leer.') : ''
+  ].filter(Boolean).join(' '),
+  archivoSinNiveles:'Ese archivo no tiene niveles de La Gran Máquina.'
 };
 
 /* ----- pantalla final ----- */
@@ -142,6 +154,7 @@ export const VALIDACION = {
   sinFlechas:() => 'Elegí al menos una flecha para poder moverse.',
   maxInvalido:() => 'El límite de bloques tiene que ser 1 o más.',
   lamparaSinEncender:() => 'Hay lámparas: sumá el bloque Encender.',
+  azarSinSi:() => 'Hay cosas que aparecen a veces: sumá el bloque Si para preguntar.',
   compuertaSinApretar:() => 'Hay una compuerta: sumá el bloque Apretar.',
   chatarrinSinRecorrido:() => 'Marcá dónde empieza y dónde termina Chatarrín.',
   chatarrinNoRecto:() => 'Chatarrín va en línea recta: marcá el final en la misma fila o columna.',

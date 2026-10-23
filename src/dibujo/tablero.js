@@ -82,6 +82,13 @@ export function signoAzar(x, y){
     '<text x="'+(X+50)+'" y="'+(Y+65)+'" text-anchor="middle" font-size="42" font-weight="bold" fill="#FFFFFF" font-family="Verdana, sans-serif">?</text>';
 }
 
+/* Marca del editor para lo que aparece a veces: un "?" chiquito en la esquina del casillero. */
+function marcaAVeces(x, y){
+  const X = x*T, Y = y*T;
+  return '<circle cx="'+(X+78)+'" cy="'+(Y+22)+'" r="18" fill="#FFFFFF" stroke="#16163A" stroke-width="4"/>'+
+    '<text x="'+(X+78)+'" y="'+(Y+31)+'" text-anchor="middle" font-size="26" font-weight="bold" fill="#16163A" font-family="Verdana, sans-serif">?</text>';
+}
+
 export function chispas(celdas, dir, activo){
   if (!celdas.length) return '';
   const horiz = dir === 'l' || dir === 'r';
@@ -142,9 +149,13 @@ export function tableroVivo(m, est, falla){
 
 /* El tablero del editor: todo a la vista, aunque todavía falte la salida o la bandera. */
 export function tableroEditor(m, pj){
-  const est = Motor.crearEstado({ ...m, inicio:m.inicio || { x:-9, y:-9 } }, Motor.variantes(m)[0]);
+  // Lo que aparece a veces se ve siempre, con una marca de pregunta en la esquina.
+  const v = { ...Motor.variantes(m)[0], guardias:new Set(m.guardias.map((_, i) => i)), lamparas:new Set(m.lamparas.map((_, i) => i)), roca:-1 };
+  const est = Motor.crearEstado({ ...m, inicio:m.inicio || { x:-9, y:-9 } }, v);
   est.rastro = [];
   let s = tableroFijo(m) + tableroVivo(m, est, null);
+  m.rocasAzar.forEach(p => { s += roca(p.x, p.y); });
+  [...m.guardias, ...m.lamparas].filter(p => p.azar).concat(m.rocasAzar).forEach(p => { s += marcaAVeces(p.x, p.y); });
   if (m.enemigo) s += enCelda(m.enemigo.camino[0].x, m.enemigo.camino[0].y, CHATARRIN);
   if (m.inicio && pj) s += enCelda(m.inicio.x, m.inicio.y, contenidoPersonaje(pj));
   return s;

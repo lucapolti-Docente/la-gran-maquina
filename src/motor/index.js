@@ -6,3 +6,4 @@ export * from './reglas.js';
 export * from './interprete.js';
 export * from './validar.js';
 export * from './editor.js';
+export * from './archivo.js';

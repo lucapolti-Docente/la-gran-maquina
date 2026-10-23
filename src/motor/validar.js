@@ -4,7 +4,7 @@ import { k, leerMapa } from './mapa.js';
 import { DIRS } from './reglas.js';
 
 export const BLOQUES_VALIDOS = ['mov','u','d','l','r','act','btn','esperar','garrote','loop','si'];
-const LETRAS = '.#SMGLlBPEeoTH<>^v';
+export const LETRAS = '.#SMGLlBPEeoTH<>^v';
 
 /* Lo que no puede pisar Chatarrín en su recorrido. */
 const NO_PISA = { '#':'roca', 'o':'roca', 'P':'compuerta', '<':'chispero', '>':'chispero', '^':'chispero', 'v':'chispero',
@@ -40,6 +40,9 @@ export function validarNivel(nivel){
   if (nivel.max !== undefined && nivel.max !== null && !(Number.isInteger(nivel.max) && nivel.max >= 1)) add('maxInvalido');
   if ((donde('L').length || donde('l').length) && !bl.includes('act')) add('lamparaSinEncender', [...donde('L'), ...donde('l')]);
   if (P.length && !bl.includes('btn')) add('compuertaSinApretar', P);
+  // Lo que aparece a veces solo se puede resolver bien preguntando con Si.
+  const aVeces = [...donde('e'), ...donde('o'), ...donde('l')];
+  if (aVeces.length && !bl.includes('si')) add('azarSinSi', aVeces);
 
   // Chatarrín
   if (nivel.enemigo) {

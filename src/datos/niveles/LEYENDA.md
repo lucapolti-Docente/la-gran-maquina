@@ -19,6 +19,9 @@ w = esperar, g = garrote, x3( ... ) = repetir 3 veces,
 ?l( ... ) = si la luz de enfrente está roja, ?b( ... ) = si hay una lámpara acá
 ```
 
+En el editor (Inventá tu nivel) se pueden pintar Bulón, roca y lámpara "a veces" (`e`, `o`, `l`): se ven con un "?" en la esquina.
+Si un nivel tiene alguna, pide el bloque Si, porque sin preguntar no se sabe qué salió.
+
 ## Qué revisa `npm test` en cada nivel
 - La `solucion` gana en todos los tableros posibles, con los bloques del nivel y dentro del límite (`max`).
 - El mapa tiene sentido (`src/motor/validar.js`, la misma revisión que usa el editor): una sola salida y una sola bandera,

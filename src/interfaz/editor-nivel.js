@@ -7,14 +7,14 @@ import { $, ico, mensaje } from './dom.js';
 import { AL_TERMINAR, cancelarCorrida } from './ejecucion.js';
 import { E, guardar, personaje } from './estado.js';
 import { APP } from './inicio.js';
-import { borrarNivel, dibujarMisNiveles, guardarNivel, leerMisNiveles, nombreDe, nuevoId } from './mis-niveles.js';
+import { abrirTexto, borrarNivel, dibujarMisNiveles, guardarEnArchivo, guardarNivel, leerMisNiveles, nombreDe, nuevoId } from './mis-niveles.js';
 import { mostrarNivel } from './niveles.js';
 import { mostrarPantalla } from './pantallas.js';
 import { sonar } from './sonido.js';
 import { ACCIONES_MENU, cerrarTodo } from './ventanas.js';
 
 const T = Dibujo.T, MARGEN = 6;
-const HERRAMIENTAS_PALETA = ['.','#','S','M','G','L','B','P','T','H','E','chispero','chatarrin'];
+const HERRAMIENTAS_PALETA = ['.','#','o','S','M','G','L','l','B','P','T','H','E','e','chispero','chatarrin'];
 const CLASE_BLOQUE = { mov:'c-mov', act:'c-act', btn:'c-btn', esperar:'c-esp', garrote:'c-gar', loop:'c-loop', si:'c-si' };
 const ICONO_BLOQUE = { mov:'r', act:'act', btn:'btn', esperar:'esperar', garrote:'garrote', loop:'loop', si:'si' };
 const FLECHA_DIR = { '<':'l', '>':'r', '^':'u', 'v':'d' };
@@ -29,8 +29,8 @@ export function abrirMisNiveles(){
   E.prueba = null; AL_TERMINAR.ganar = null;
   E.modo = 'inventar'; guardar();
   leerMisNiveles();
-  if (!E.misNiveles.length) { nuevoNivel(); return; } // la primera vez se va directo a inventar
   mostrarPantalla('en-mis-niveles');
+  avisoArchivo(null);
   document.body.classList.remove('dificil');
   $('tituloNivel').innerHTML = '<b>'+EDITOR.titulo+'</b>';
   dibujarMisNiveles();
@@ -193,6 +193,15 @@ export function volverAEditar(){
   abrirEditor(nv);
 }
 
+/* El renglón de arriba de la lista cuenta qué pasó con el archivo (o explica para qué sirve). */
+let notaMisNiveles = null;
+function avisoArchivo(texto){
+  const p = $('notaMisNiveles');
+  if (notaMisNiveles === null) notaMisNiveles = p.textContent;
+  p.textContent = texto || notaMisNiveles;
+  p.classList.toggle('aviso-archivo', !!texto);
+}
+
 function sacudir(el){ el.classList.remove('sacude'); el.getBoundingClientRect(); el.classList.add('sacude'); }
 
 /* ----- eventos ----- */
@@ -212,14 +221,31 @@ export function conectarEditor(){
     const id = b.dataset.jugar || b.dataset.editar || b.dataset.borrar, nv = E.misNiveles.find(n => n.id === id); if (!nv) return;
     if (b.dataset.jugar) probar(nv);
     else if (b.dataset.editar) abrirEditor(nv);
-    else if (confirm(EDITOR.borrar(nombreDe(nv)))) { borrarNivel(id); if (E.misNiveles.length) dibujarMisNiveles(); else abrirMisNiveles(); }
+    else if (confirm(EDITOR.borrar(nombreDe(nv)))) { borrarNivel(id); dibujarMisNiveles(); }
+  });
+
+  $('btnGuardarArchivo').addEventListener('click', () => { avisoArchivo(EDITOR.archivoGuardado(guardarEnArchivo())); sonar('tecla'); });
+  $('btnAbrirArchivo').addEventListener('click', () => $('inArchivo').click());
+  $('inArchivo').addEventListener('change', e => {
+    const archivo = e.target.files && e.target.files[0]; e.target.value = ''; // así se puede volver a abrir el mismo
+    if (!archivo) return;
+    const lector = new FileReader();
+    lector.onload = () => {
+      const r = abrirTexto(String(lector.result));
+      const algo = r.nuevos + r.repetidos + r.malos > 0;
+      avisoArchivo(algo ? EDITOR.archivoAbierto(r.nuevos, r.repetidos, r.malos) : EDITOR.archivoSinNiveles);
+      sonar(r.nuevos ? 'ganar' : 'aviso');
+      dibujarMisNiveles();
+    };
+    lector.onerror = () => { avisoArchivo(EDITOR.archivoSinNiveles); sonar('aviso'); };
+    lector.readAsText(archivo);
   });
 
   document.querySelector('.pestanas').addEventListener('click', e => { const b = e.target.closest('[data-pestana]'); if (b) elegirPestana(b.dataset.pestana); });
   $('herramientas').addEventListener('click', e => {
     const b = e.target.closest('[data-herr]'); if (!b) return;
     ed().herramienta = b.dataset.herr; ed().chatarrinDesde = null;
-    ed().aviso = b.dataset.herr === 'chatarrin' ? EDITOR.chatarrinDesde : null;
+    ed().aviso = b.dataset.herr === 'chatarrin' ? EDITOR.chatarrinDesde : (EDITOR.ayudaAzar[b.dataset.herr] || null);
     dibujarHerramientas(); dibujarTableroEditor(); dibujarAvisos();
   });
   $('direcciones').addEventListener('click', e => { const b = e.target.closest('[data-dir]'); if (b) { ed().dir = b.dataset.dir; dibujarHerramientas(); } });

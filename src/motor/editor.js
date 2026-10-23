@@ -7,7 +7,7 @@ export const LIMITES = { ancho:{ min:3, max:10 }, alto:{ min:2, max:6 } };
 export const LIMITE_BLOQUES = 30;
 
 /* Lo que se puede pintar en un casillero (una letra del mapa). Chatarrín va aparte, porque no es una letra. */
-export const HERRAMIENTAS = ['.','#','S','M','G','L','B','P','T','H','E','<','>','^','v'];
+export const HERRAMIENTAS = ['.','#','o','S','M','G','L','l','B','P','T','H','E','e','<','>','^','v'];
 export const BLOQUES_EDITOR = ['mov','act','btn','esperar','garrote','loop','si'];
 const UNICAS = ['S','M'];
 

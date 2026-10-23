@@ -32,7 +32,16 @@
         <svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span>Nuevo nivel</span>
       </button>
     </div>
-    <p class="nota-guardado">Los niveles se guardan solo en esta compu.</p>
+    <div class="fila-archivo">
+      <p class="nota-guardado" id="notaMisNiveles" role="status">Los niveles se guardan solo en esta compu. Para llevarlos a otra, guardalos en un archivo.</p>
+      <button class="accion" id="btnGuardarArchivo">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span>Guardar en archivo</span>
+      </button>
+      <button class="accion" id="btnAbrirArchivo">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M12 15V4M7 9l5-5 5 5M5 20h14"/></svg><span>Abrir archivo</span>
+      </button>
+      <input type="file" id="inArchivo" accept=".txt,text/plain" hidden>
+    </div>
     <div class="lista-niveles" id="listaMisNiveles"></div>
   </main>
 
